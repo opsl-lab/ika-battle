@@ -1,434 +1,1062 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#61c8ee">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#39b9ed">
+<title>IKA BATTLE</title>
 
-  <title>IKA BATTLE</title>
+<style>
+*{
+  box-sizing:border-box;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+:root{
+  --blue:#079fe0;
+  --deep:#057bb9;
+  --navy:#073b5b;
+  --sky:#72d1f4;
+  --pale:#e9f9ff;
+  --coral:#df7065;
+  --gold:#c69a3c;
+  --line:#dcecf3;
+}
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont,
-                   "Segoe UI", "Noto Sans JP", sans-serif;
-      background: #eef9fd;
-      color: #17384b;
-    }
+html{
+  background:#dff5fd;
+}
 
-    .app {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100vh;
-      margin: 0 auto;
-      background: #f7fcfe;
-      padding-bottom: 100px;
-    }
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,
+  "Segoe UI","Noto Sans JP",sans-serif;
+  color:var(--navy);
+  background:#dff5fd;
+}
 
-    /* ===== 海のヘッダー ===== */
+button{
+  font:inherit;
+}
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 190px;
-      padding: 38px 24px 28px;
-      text-align: center;
-      color: white;
-      background:
-        linear-gradient(
-          180deg,
-          #70d6f5 0%,
-          #8ee1f5 48%,
-          #30afd8 49%,
-          #1489bb 100%
-        );
-    }
+/* ===== APP ===== */
 
-    .sun {
-      position: absolute;
-      width: 65px;
-      height: 65px;
-      top: 20px;
-      right: 25px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.32);
-    }
+.app{
+  position:relative;
+  width:100%;
+  max-width:430px;
+  min-height:100vh;
+  margin:auto;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      180deg,
+      #f6fdff 0%,
+      #edfaff 63%,
+      #d8f4ff 100%
+    );
+  padding-bottom:90px;
+}
 
-    .hero h1 {
-      position: relative;
-      margin: 8px 0 2px;
-      font-size: 35px;
-      letter-spacing: 3px;
-      font-weight: 900;
-    }
+/* ===== HERO ===== */
 
-    .hero p {
-      position: relative;
-      margin: 0;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      opacity: .95;
-    }
+.hero{
+  position:relative;
+  height:255px;
+  overflow:hidden;
+  text-align:center;
+  color:white;
+  background:
+    linear-gradient(
+      180deg,
+      #55c8f4 0%,
+      #86dcf7 44%,
+      #17a9dc 45%,
+      #057eb7 100%
+    );
+}
 
-    .squid {
-      position: absolute;
-      left: 22px;
-      bottom: 10px;
-      font-size: 54px;
-      opacity: .92;
-      transform: rotate(-12deg);
-    }
+/* sun */
 
-    .wave {
-      position: absolute;
-      left: -5%;
-      bottom: -24px;
-      width: 110%;
-      height: 50px;
-      background: #f7fcfe;
-      border-radius: 50% 50% 0 0;
-    }
+.sun{
+  position:absolute;
+  top:22px;
+  left:25px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:rgba(255,255,255,.33);
+  box-shadow:
+    0 0 30px rgba(255,255,255,.7),
+    0 0 65px rgba(255,255,255,.35);
+}
 
-    /* ===== メイン ===== */
+/* clouds */
 
-    main {
-      padding: 18px;
-    }
+.cloud{
+  position:absolute;
+  height:16px;
+  border-radius:30px;
+  background:rgba(255,255,255,.72);
+}
 
-    .card {
-      margin-bottom: 14px;
-      padding: 19px;
-      border-radius: 22px;
-      background: white;
-      box-shadow: 0 7px 22px rgba(30, 105, 135, .09);
-    }
+.cloud:before,
+.cloud:after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  border-radius:50%;
+  background:inherit;
+}
 
-    .label {
-      margin-bottom: 12px;
-      color: #5c93a9;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
+.cloud:before{
+  width:28px;
+  height:28px;
+  left:13px;
+}
 
-    /* ===== 年間ランキング ===== */
+.cloud:after{
+  width:20px;
+  height:20px;
+  left:35px;
+}
 
-    .leader {
-      text-align: center;
-    }
+.cloud.one{
+  width:70px;
+  top:52px;
+  left:35px;
+  opacity:.6;
+}
 
-    .crown {
-      font-size: 27px;
-    }
+.cloud.two{
+  width:65px;
+  top:76px;
+  right:20px;
+  opacity:.5;
+}
 
-    .leader-name {
-      margin-top: 2px;
-      font-size: 25px;
-      font-weight: 900;
-    }
+/* logo */
 
-    .leader-score {
-      margin: 3px 0 17px;
-      color: #159ccc;
-      font-size: 35px;
-      font-weight: 900;
-    }
+.logo{
+  position:relative;
+  z-index:4;
+  padding-top:46px;
+}
 
-    .ranking {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
-    }
+.crown-mini{
+  margin-bottom:-4px;
+  font-size:22px;
+}
 
-    .person {
-      padding: 11px 5px;
-      border-radius: 15px;
-      background: #f1faff;
-    }
+.logo h1{
+  margin:0;
+  font-size:38px;
+  line-height:1;
+  font-weight:950;
+  font-style:italic;
+  letter-spacing:1px;
+  text-shadow:0 3px 12px rgba(0,80,130,.18);
+}
 
-    .person strong {
-      display: block;
-      margin-bottom: 3px;
-      font-size: 14px;
-    }
+.logo p{
+  margin:10px 0 0;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:5px;
+}
 
-    .person span {
-      color: #158dbb;
-      font-size: 20px;
-      font-weight: 900;
-    }
+/* distant islands */
 
-    /* ===== MVP ===== */
+.island{
+  position:absolute;
+  z-index:2;
+  bottom:70px;
+  left:-5%;
+  width:110%;
+  height:34px;
+  opacity:.38;
+  background:#176f8d;
+  clip-path:polygon(
+    0 90%,
+    8% 65%,
+    15% 72%,
+    23% 30%,
+    30% 65%,
+    39% 50%,
+    46% 80%,
+    57% 35%,
+    67% 75%,
+    77% 45%,
+    88% 72%,
+    100% 48%,
+    100% 100%,
+    0 100%
+  );
+}
 
-    .mvp {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #e2f8ff, #f7fdff);
-    }
+/* squid line art */
 
-    .mvp-title {
-      color: #168fba;
-      font-size: 13px;
-      font-weight: 900;
-    }
+.hero-squid{
+  position:absolute;
+  z-index:3;
+  right:16px;
+  bottom:46px;
+  width:95px;
+  height:95px;
+  opacity:.72;
+  transform:rotate(15deg);
+}
 
-    .mvp-name {
-      margin-top: 5px;
-      font-size: 22px;
-      font-weight: 900;
-    }
+.squid-body{
+  position:absolute;
+  top:4px;
+  left:29px;
+  width:38px;
+  height:59px;
+  border:4px solid white;
+  border-radius:60% 60% 45% 45%;
+  transform:rotate(-8deg);
+}
 
-    .mvp-score {
-      color: #159ccc;
-      font-weight: 800;
-    }
+.squid-body:before{
+  content:"";
+  position:absolute;
+  top:17px;
+  left:-14px;
+  width:13px;
+  height:28px;
+  border-left:4px solid white;
+  transform:rotate(-28deg);
+}
 
-    .mvp-icon {
-      position: absolute;
-      right: 17px;
-      bottom: -8px;
-      font-size: 62px;
-      opacity: .18;
-    }
+.squid-body:after{
+  content:"";
+  position:absolute;
+  top:17px;
+  right:-14px;
+  width:13px;
+  height:28px;
+  border-right:4px solid white;
+  transform:rotate(28deg);
+}
 
-    /* ===== タコ ===== */
+.tentacle{
+  position:absolute;
+  top:59px;
+  width:28px;
+  height:25px;
+  border-bottom:4px solid white;
+  border-radius:50%;
+}
 
-    .octopus-card {
-      background: #fff5f1;
-    }
+.t1{left:15px;transform:rotate(22deg)}
+.t2{left:29px;transform:rotate(8deg)}
+.t3{left:43px;transform:rotate(-8deg)}
+.t4{left:56px;transform:rotate(-24deg)}
 
-    .octopus-title {
-      margin-bottom: 12px;
-      color: #d87d6b;
-      font-size: 13px;
-      font-weight: 900;
-    }
+/* slogan */
 
-    .octopus-ranking {
-      display: flex;
-      justify-content: space-between;
-      text-align: center;
-    }
+.slogan{
+  position:absolute;
+  z-index:4;
+  left:23px;
+  bottom:51px;
+  font-family:cursive;
+  font-size:13px;
+  font-style:italic;
+  transform:rotate(-6deg);
+  opacity:.92;
+}
 
-    .octopus-ranking div {
-      width: 32%;
-    }
+/* hero wave */
 
-    .octopus-ranking strong {
-      display: block;
-      font-size: 13px;
-    }
+.hero-wave{
+  position:absolute;
+  z-index:5;
+  left:-8%;
+  bottom:-31px;
+  width:116%;
+  height:67px;
+  border-radius:50% 50% 0 0;
+  background:#f6fdff;
+}
 
-    .octopus-ranking span {
-      color: #d87967;
-      font-size: 18px;
-      font-weight: 900;
-    }
+/* ===== CONTENT ===== */
 
-    /* ===== 最近の釣果 ===== */
+.content{
+  position:relative;
+  z-index:6;
+  margin-top:-8px;
+  padding:0 15px 24px;
+}
 
-    .catch-row {
-      display: grid;
-      grid-template-columns: 55px 1fr 1fr 45px;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #eaf2f5;
-      font-size: 13px;
-    }
+/* ===== CARD ===== */
 
-    .catch-row:last-child {
-      border-bottom: 0;
-    }
+.card{
+  margin-bottom:13px;
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:24px;
+  background:rgba(255,255,255,.96);
+  box-shadow:
+    0 8px 24px rgba(19,108,147,.10);
+}
 
-    .catch-count {
-      color: #159ccc;
-      font-weight: 900;
-      text-align: right;
-    }
+/* ===== SEASON LEADER ===== */
 
-    /* ===== 登録ボタン ===== */
+.season{
+  padding:20px 15px 16px;
+  text-align:center;
+}
 
-    .register {
-      width: 100%;
-      margin-top: 4px;
-      padding: 17px;
-      border: 0;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #21a9dc, #1388c1);
-      color: white;
-      font-size: 16px;
-      font-weight: 900;
-      box-shadow: 0 8px 18px rgba(18, 143, 194, .25);
-      cursor: pointer;
-    }
+.season-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:2px;
+}
 
-    /* ===== 下メニュー ===== */
+.season-sub{
+  margin-top:2px;
+  color:#b18b42;
+  font-size:11px;
+  font-weight:800;
+}
 
-    .nav {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      max-width: 430px;
-      padding: 11px 6px 18px;
-      transform: translateX(-50%);
-      border-top: 1px solid #dcecf2;
-      background: rgba(255,255,255,.96);
-    }
+.big-crown{
+  margin-top:7px;
+  font-size:25px;
+}
 
-    .nav div {
-      color: #7c9eac;
-      font-size: 11px;
-      font-weight: 700;
-      text-align: center;
-    }
+.leader-name{
+  margin-top:-2px;
+  font-size:27px;
+  font-weight:950;
+}
 
-    .nav .active {
-      color: #159ccc;
-    }
+.leader-score{
+  display:inline-block;
+  position:relative;
+  margin:0 0 14px;
+  color:var(--blue);
+  font-size:39px;
+  font-weight:950;
+}
 
-    .nav-icon {
-      display: block;
-      margin-bottom: 2px;
-      font-size: 20px;
-    }
-  </style>
+.leader-score:after{
+  content:"";
+  position:absolute;
+  left:-7px;
+  right:-7px;
+  bottom:-3px;
+  height:4px;
+  border-radius:50%;
+  background:#e8c66e;
+  transform:rotate(-2deg);
+}
+
+.rank-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+.rank{
+  padding:10px 3px;
+  border-radius:17px;
+  background:linear-gradient(180deg,#f1fbff,#e7f7fd);
+}
+
+.medal{
+  font-size:20px;
+}
+
+.rank-name{
+  margin-top:2px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.rank-score{
+  margin-top:2px;
+  color:#078fc9;
+  font-size:20px;
+  font-weight:950;
+}
+
+/* ===== TWO CARDS ===== */
+
+.two-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:13px;
+}
+
+.small-card{
+  position:relative;
+  min-height:156px;
+  overflow:hidden;
+  padding:17px;
+  border-radius:22px;
+  box-shadow:0 8px 20px rgba(19,108,147,.09);
+}
+
+.mvp{
+  background:
+    linear-gradient(135deg,#ddf7ff,#f1fcff);
+}
+
+.octopus{
+  background:
+    linear-gradient(135deg,#fff0ed,#fff8f5);
+}
+
+.small-title{
+  position:relative;
+  z-index:2;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:1.5px;
+}
+
+.mvp .small-title{
+  color:#087eb7;
+}
+
+.octopus .small-title{
+  color:#d7655e;
+}
+
+.small-sub{
+  position:relative;
+  z-index:2;
+  margin-top:3px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.mvp-name{
+  position:relative;
+  z-index:2;
+  margin-top:13px;
+  font-size:23px;
+  font-weight:950;
+}
+
+.mvp-score{
+  position:relative;
+  z-index:2;
+  color:#058ed0;
+  font-size:25px;
+  font-weight:950;
+}
+
+.ghost-squid{
+  position:absolute;
+  right:-8px;
+  bottom:-12px;
+  font-size:76px;
+  opacity:.10;
+}
+
+/* octopus rankings */
+
+.octo-icon{
+  margin-right:4px;
+}
+
+.octo-row{
+  display:grid;
+  position:relative;
+  z-index:2;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+  margin-top:24px;
+  text-align:center;
+}
+
+.octo-row div{
+  border-right:1px solid rgba(210,105,95,.18);
+}
+
+.octo-row div:last-child{
+  border-right:0;
+}
+
+.octo-name{
+  font-size:11px;
+  font-weight:900;
+}
+
+.octo-score{
+  margin-top:5px;
+  color:#d35f59;
+  font-size:18px;
+  font-weight:950;
+}
+
+/* ===== RECENT ===== */
+
+.recent{
+  padding:17px 16px 11px;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.section-title{
+  color:#187eae;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:2px;
+}
+
+.section-sub{
+  margin-top:1px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.view-all{
+  padding:7px 10px;
+  border:0;
+  border-radius:20px;
+  color:#387a9b;
+  background:#edf9fe;
+  font-size:10px;
+  font-weight:800;
+}
+
+.catch{
+  display:grid;
+  grid-template-columns:48px 1fr 1.3fr 39px;
+  align-items:center;
+  min-height:43px;
+  border-top:1px solid var(--line);
+  font-size:12px;
+}
+
+.catch-name{
+  font-weight:900;
+}
+
+.catch-species{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.mini-squid{
+  color:#32aee2;
+  font-size:17px;
+}
+
+.mini-cuttle{
+  color:#8e918d;
+  font-size:17px;
+}
+
+.catch-count{
+  color:#078fd0;
+  font-size:16px;
+  font-weight:950;
+  text-align:right;
+}
+
+/* ===== UNDERWATER AREA ===== */
+
+.underwater{
+  position:relative;
+  margin:0 -15px -24px;
+  padding:18px 20px 36px;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(219,247,255,.15),
+      rgba(87,198,234,.32)
+    );
+}
+
+.underwater:before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:90px;
+  opacity:.18;
+  background:
+    radial-gradient(circle at 15% 100%,#0782b7 0 4px,transparent 5px),
+    radial-gradient(circle at 27% 90%,#0782b7 0 3px,transparent 4px),
+    radial-gradient(circle at 74% 92%,#0782b7 0 5px,transparent 6px);
+}
+
+.fish{
+  position:absolute;
+  color:#0479ac;
+  font-size:18px;
+  opacity:.55;
+}
+
+.fish.one{
+  right:17px;
+  bottom:19px;
+}
+
+.fish.two{
+  right:48px;
+  bottom:7px;
+  transform:scale(.75);
+}
+
+/* ===== REGISTER BUTTON ===== */
+
+.register{
+  display:flex;
+  position:relative;
+  z-index:3;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  min-height:64px;
+  border:2px solid rgba(255,255,255,.9);
+  border-radius:32px;
+  color:white;
+  background:
+    linear-gradient(135deg,#22b9e8,#037ac0);
+  box-shadow:
+    0 10px 25px rgba(0,121,181,.25);
+  font-size:17px;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.plus{
+  display:grid;
+  width:36px;
+  height:36px;
+  place-items:center;
+  border-radius:50%;
+  color:#078ac8;
+  background:white;
+  font-size:28px;
+  font-weight:400;
+}
+
+.arrow{
+  position:absolute;
+  right:20px;
+  font-size:27px;
+}
+
+.memory{
+  position:relative;
+  z-index:3;
+  margin:12px 0 0 5px;
+  color:#3b93b7;
+  font-family:cursive;
+  font-size:11px;
+  font-style:italic;
+}
+
+/* ===== NAV ===== */
+
+.bottom-nav{
+  position:fixed;
+  z-index:20;
+  left:50%;
+  bottom:0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  width:100%;
+  max-width:430px;
+  height:79px;
+  transform:translateX(-50%);
+  border-top:1px solid #dcecf2;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 -5px 20px rgba(23,101,135,.05);
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:4px;
+  color:#7597a7;
+  font-size:10px;
+  font-weight:850;
+}
+
+.nav-icon{
+  position:relative;
+  width:25px;
+  height:25px;
+}
+
+/* home icon */
+
+.home-icon:before{
+  content:"";
+  position:absolute;
+  left:4px;
+  top:9px;
+  width:16px;
+  height:13px;
+  border:3px solid currentColor;
+  border-top:0;
+}
+
+.home-icon:after{
+  content:"";
+  position:absolute;
+  left:5px;
+  top:3px;
+  width:14px;
+  height:14px;
+  border-top:3px solid currentColor;
+  border-left:3px solid currentColor;
+  transform:rotate(45deg);
+}
+
+/* plus nav */
+
+.add-icon{
+  border:2px solid currentColor;
+  border-radius:50%;
+}
+
+.add-icon:before,
+.add-icon:after{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  background:currentColor;
+  transform:translate(-50%,-50%);
+}
+
+.add-icon:before{
+  width:13px;
+  height:2px;
+}
+
+.add-icon:after{
+  width:2px;
+  height:13px;
+}
+
+/* history */
+
+.list-icon:before{
+  content:"☷";
+  position:absolute;
+  inset:-8px 0 0;
+  font-size:35px;
+  line-height:1;
+}
+
+/* chart */
+
+.chart-icon{
+  border-bottom:3px solid currentColor;
+}
+
+.chart-icon:before{
+  content:"";
+  position:absolute;
+  left:3px;
+  bottom:2px;
+  width:4px;
+  height:10px;
+  background:currentColor;
+  box-shadow:
+    7px -6px 0 currentColor,
+    14px -13px 0 currentColor;
+}
+
+.nav-item.active{
+  color:var(--blue);
+}
+
+/* ===== PC ===== */
+
+@media(min-width:700px){
+  body{
+    background:#e9f8fd;
+  }
+
+  .app{
+    box-shadow:0 0 40px rgba(0,90,130,.10);
+  }
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
+  <!-- HEADER -->
   <header class="hero">
+
     <div class="sun"></div>
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
 
-    <div class="squid">🦑</div>
+    <div class="logo">
+      <div class="crown-mini">♕</div>
+      <h1>IKA BATTLE</h1>
+      <p>2026 SEASON</p>
+    </div>
 
-    <h1>IKA BATTLE</h1>
-    <p>2026 SEASON</p>
+    <div class="island"></div>
 
-    <div class="wave"></div>
+    <div class="hero-squid">
+      <div class="squid-body"></div>
+      <div class="tentacle t1"></div>
+      <div class="tentacle t2"></div>
+      <div class="tentacle t3"></div>
+      <div class="tentacle t4"></div>
+    </div>
+
+    <div class="slogan">
+      No Ika, No Life
+    </div>
+
+    <div class="hero-wave"></div>
+
   </header>
 
-  <main>
 
-    <section class="card leader">
-      <div class="label">SEASON LEADER</div>
+  <main class="content">
 
-      <div class="crown">👑</div>
-      <div class="leader-name">ひろき</div>
-      <div class="leader-score">42杯</div>
+    <!-- SEASON LEADER -->
+    <section class="card season">
 
-      <div class="ranking">
+      <div class="season-title">
+        ♛ SEASON LEADER ♛
+      </div>
 
-        <div class="person">
-          <strong>ひろき</strong>
-          <span>42杯</span>
+      <div class="season-sub">
+        年間王者
+      </div>
+
+      <div class="big-crown">👑</div>
+
+      <div class="leader-name">
+        ひろき
+      </div>
+
+      <div class="leader-score">
+        42杯
+      </div>
+
+      <div class="rank-grid">
+
+        <div class="rank">
+          <div class="medal">🥇</div>
+          <div class="rank-name">ひろき</div>
+          <div class="rank-score">42杯</div>
         </div>
 
-        <div class="person">
-          <strong>ゆうま</strong>
-          <span>37杯</span>
+        <div class="rank">
+          <div class="medal">🥈</div>
+          <div class="rank-name">ゆうま</div>
+          <div class="rank-score">37杯</div>
         </div>
 
-        <div class="person">
-          <strong>まさき</strong>
-          <span>31杯</span>
+        <div class="rank">
+          <div class="medal">🥉</div>
+          <div class="rank-name">まさき</div>
+          <div class="rank-score">31杯</div>
         </div>
 
       </div>
+
     </section>
 
-    <section class="card mvp">
-      <div class="label">MONTHLY MVP</div>
 
-      <div class="mvp-title">今月のMVP</div>
-      <div class="mvp-name">まさき</div>
-      <div class="mvp-score">18杯</div>
+    <!-- MVP + OCTOPUS -->
+    <div class="two-grid">
 
-      <div class="mvp-icon">🦑</div>
-    </section>
+      <section class="small-card mvp">
 
-    <section class="card octopus-card">
-      <div class="octopus-title">🐙 タコ部門</div>
+        <div class="small-title">
+          ♕ MONTHLY MVP
+        </div>
 
-      <div class="octopus-ranking">
+        <div class="small-sub">
+          今月のMVP
+        </div>
+
+        <div class="mvp-name">
+          まさき
+        </div>
+
+        <div class="mvp-score">
+          18杯
+        </div>
+
+        <div class="ghost-squid">
+          ◇
+        </div>
+
+      </section>
+
+
+      <section class="small-card octopus">
+
+        <div class="small-title">
+          <span class="octo-icon">🐙</span>
+          タコ部門
+        </div>
+
+        <div class="small-sub">
+          OCTOPUS RANKING
+        </div>
+
+        <div class="octo-row">
+
+          <div>
+            <div class="octo-name">ひろき</div>
+            <div class="octo-score">2匹</div>
+          </div>
+
+          <div>
+            <div class="octo-name">ゆうま</div>
+            <div class="octo-score">0匹</div>
+          </div>
+
+          <div>
+            <div class="octo-name">まさき</div>
+            <div class="octo-score">1匹</div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- RECENT -->
+    <section class="card recent">
+
+      <div class="section-head">
+
         <div>
-          <strong>ひろき</strong>
-          <span>2匹</span>
+          <div class="section-title">
+            RECENT CATCHES
+          </div>
+
+          <div class="section-sub">
+            最近の釣果
+          </div>
         </div>
 
-        <div>
-          <strong>ゆうま</strong>
-          <span>0匹</span>
-        </div>
+        <button class="view-all">
+          すべて見る ›
+        </button>
 
-        <div>
-          <strong>まさき</strong>
-          <span>1匹</span>
-        </div>
       </div>
+
+
+      <div class="catch">
+        <div>9/21</div>
+        <div class="catch-name">ひろき</div>
+        <div class="catch-species">
+          <span class="mini-squid">♢</span>
+          アオリイカ
+        </div>
+        <div class="catch-count">5杯</div>
+      </div>
+
+      <div class="catch">
+        <div>9/20</div>
+        <div class="catch-name">まさき</div>
+        <div class="catch-species">
+          <span class="mini-cuttle">♢</span>
+          コウイカ
+        </div>
+        <div class="catch-count">3杯</div>
+      </div>
+
+      <div class="catch">
+        <div>9/18</div>
+        <div class="catch-name">ゆうま</div>
+        <div class="catch-species">
+          <span class="mini-squid">♢</span>
+          アオリイカ
+        </div>
+        <div class="catch-count">4杯</div>
+      </div>
+
     </section>
 
-    <section class="card">
-      <div class="label">RECENT CATCHES</div>
 
-      <div class="catch-row">
-        <span>9/21</span>
-        <strong>ひろき</strong>
-        <span>アオリイカ</span>
-        <span class="catch-count">5杯</span>
+    <!-- REGISTER -->
+    <div class="underwater">
+
+      <button class="register">
+
+        <span class="plus">＋</span>
+
+        <span>
+          釣果を登録する
+        </span>
+
+        <span class="arrow">
+          ›
+        </span>
+
+      </button>
+
+      <div class="memory">
+        釣ったイカが、思い出になる。
       </div>
 
-      <div class="catch-row">
-        <span>9/20</span>
-        <strong>まさき</strong>
-        <span>コウイカ</span>
-        <span class="catch-count">3杯</span>
-      </div>
+      <div class="fish one">➤</div>
+      <div class="fish two">➤</div>
 
-      <div class="catch-row">
-        <span>9/18</span>
-        <strong>ゆうま</strong>
-        <span>アオリイカ</span>
-        <span class="catch-count">4杯</span>
-      </div>
-    </section>
-
-    <button class="register">
-      ＋ 釣果を登録する
-    </button>
+    </div>
 
   </main>
 
-  <nav class="nav">
-    <div class="active">
-      <span class="nav-icon">⌂</span>
-      ホーム
+
+  <!-- NAV -->
+  <nav class="bottom-nav">
+
+    <div class="nav-item active">
+      <span class="nav-icon home-icon"></span>
+      <span>ホーム</span>
     </div>
 
-    <div>
-      <span class="nav-icon">＋</span>
-      釣果登録
+    <div class="nav-item">
+      <span class="nav-icon add-icon"></span>
+      <span>釣果登録</span>
     </div>
 
-    <div>
-      <span class="nav-icon">☷</span>
-      履歴
+    <div class="nav-item">
+      <span class="nav-icon list-icon"></span>
+      <span>履歴</span>
     </div>
 
-    <div>
-      <span class="nav-icon">◫</span>
-      データ
+    <div class="nav-item">
+      <span class="nav-icon chart-icon"></span>
+      <span>データ</span>
     </div>
+
   </nav>
 
 </div>
