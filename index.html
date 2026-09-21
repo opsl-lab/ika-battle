@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#61c8ee">
+
+  <title>IKA BATTLE</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", "Noto Sans JP", sans-serif;
+      background: #eef9fd;
+      color: #17384b;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #f7fcfe;
+      padding-bottom: 100px;
+    }
+
+    /* ===== 海のヘッダー ===== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 190px;
+      padding: 38px 24px 28px;
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(
+          180deg,
+          #70d6f5 0%,
+          #8ee1f5 48%,
+          #30afd8 49%,
+          #1489bb 100%
+        );
+    }
+
+    .sun {
+      position: absolute;
+      width: 65px;
+      height: 65px;
+      top: 20px;
+      right: 25px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.32);
+    }
+
+    .hero h1 {
+      position: relative;
+      margin: 8px 0 2px;
+      font-size: 35px;
+      letter-spacing: 3px;
+      font-weight: 900;
+    }
+
+    .hero p {
+      position: relative;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      opacity: .95;
+    }
+
+    .squid {
+      position: absolute;
+      left: 22px;
+      bottom: 10px;
+      font-size: 54px;
+      opacity: .92;
+      transform: rotate(-12deg);
+    }
+
+    .wave {
+      position: absolute;
+      left: -5%;
+      bottom: -24px;
+      width: 110%;
+      height: 50px;
+      background: #f7fcfe;
+      border-radius: 50% 50% 0 0;
+    }
+
+    /* ===== メイン ===== */
+
+    main {
+      padding: 18px;
+    }
+
+    .card {
+      margin-bottom: 14px;
+      padding: 19px;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 7px 22px rgba(30, 105, 135, .09);
+    }
+
+    .label {
+      margin-bottom: 12px;
+      color: #5c93a9;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    /* ===== 年間ランキング ===== */
+
+    .leader {
+      text-align: center;
+    }
+
+    .crown {
+      font-size: 27px;
+    }
+
+    .leader-name {
+      margin-top: 2px;
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .leader-score {
+      margin: 3px 0 17px;
+      color: #159ccc;
+      font-size: 35px;
+      font-weight: 900;
+    }
+
+    .ranking {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .person {
+      padding: 11px 5px;
+      border-radius: 15px;
+      background: #f1faff;
+    }
+
+    .person strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    .person span {
+      color: #158dbb;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    /* ===== MVP ===== */
+
+    .mvp {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e2f8ff, #f7fdff);
+    }
+
+    .mvp-title {
+      color: #168fba;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .mvp-name {
+      margin-top: 5px;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .mvp-score {
+      color: #159ccc;
+      font-weight: 800;
+    }
+
+    .mvp-icon {
+      position: absolute;
+      right: 17px;
+      bottom: -8px;
+      font-size: 62px;
+      opacity: .18;
+    }
+
+    /* ===== タコ ===== */
+
+    .octopus-card {
+      background: #fff5f1;
+    }
+
+    .octopus-title {
+      margin-bottom: 12px;
+      color: #d87d6b;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .octopus-ranking {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .octopus-ranking div {
+      width: 32%;
+    }
+
+    .octopus-ranking strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .octopus-ranking span {
+      color: #d87967;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    /* ===== 最近の釣果 ===== */
+
+    .catch-row {
+      display: grid;
+      grid-template-columns: 55px 1fr 1fr 45px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eaf2f5;
+      font-size: 13px;
+    }
+
+    .catch-row:last-child {
+      border-bottom: 0;
+    }
+
+    .catch-count {
+      color: #159ccc;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    /* ===== 登録ボタン ===== */
+
+    .register {
+      width: 100%;
+      margin-top: 4px;
+      padding: 17px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #21a9dc, #1388c1);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(18, 143, 194, .25);
+      cursor: pointer;
+    }
+
+    /* ===== 下メニュー ===== */
+
+    .nav {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 430px;
+      padding: 11px 6px 18px;
+      transform: translateX(-50%);
+      border-top: 1px solid #dcecf2;
+      background: rgba(255,255,255,.96);
+    }
+
+    .nav div {
+      color: #7c9eac;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .nav .active {
+      color: #159ccc;
+    }
+
+    .nav-icon {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="hero">
+    <div class="sun"></div>
+
+    <div class="squid">🦑</div>
+
+    <h1>IKA BATTLE</h1>
+    <p>2026 SEASON</p>
+
+    <div class="wave"></div>
+  </header>
+
+  <main>
+
+    <section class="card leader">
+      <div class="label">SEASON LEADER</div>
+
+      <div class="crown">👑</div>
+      <div class="leader-name">ひろき</div>
+      <div class="leader-score">42杯</div>
+
+      <div class="ranking">
+
+        <div class="person">
+          <strong>ひろき</strong>
+          <span>42杯</span>
+        </div>
+
+        <div class="person">
+          <strong>ゆうま</strong>
+          <span>37杯</span>
+        </div>
+
+        <div class="person">
+          <strong>まさき</strong>
+          <span>31杯</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card mvp">
+      <div class="label">MONTHLY MVP</div>
+
+      <div class="mvp-title">今月のMVP</div>
+      <div class="mvp-name">まさき</div>
+      <div class="mvp-score">18杯</div>
+
+      <div class="mvp-icon">🦑</div>
+    </section>
+
+    <section class="card octopus-card">
+      <div class="octopus-title">🐙 タコ部門</div>
+
+      <div class="octopus-ranking">
+        <div>
+          <strong>ひろき</strong>
+          <span>2匹</span>
+        </div>
+
+        <div>
+          <strong>ゆうま</strong>
+          <span>0匹</span>
+        </div>
+
+        <div>
+          <strong>まさき</strong>
+          <span>1匹</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="label">RECENT CATCHES</div>
+
+      <div class="catch-row">
+        <span>9/21</span>
+        <strong>ひろき</strong>
+        <span>アオリイカ</span>
+        <span class="catch-count">5杯</span>
+      </div>
+
+      <div class="catch-row">
+        <span>9/20</span>
+        <strong>まさき</strong>
+        <span>コウイカ</span>
+        <span class="catch-count">3杯</span>
+      </div>
+
+      <div class="catch-row">
+        <span>9/18</span>
+        <strong>ゆうま</strong>
+        <span>アオリイカ</span>
+        <span class="catch-count">4杯</span>
+      </div>
+    </section>
+
+    <button class="register">
+      ＋ 釣果を登録する
+    </button>
+
+  </main>
+
+  <nav class="nav">
+    <div class="active">
+      <span class="nav-icon">⌂</span>
+      ホーム
+    </div>
+
+    <div>
+      <span class="nav-icon">＋</span>
+      釣果登録
+    </div>
+
+    <div>
+      <span class="nav-icon">☷</span>
+      履歴
+    </div>
+
+    <div>
+      <span class="nav-icon">◫</span>
+      データ
+    </div>
+  </nav>
+
+</div>
+
+</body>
+</html>
