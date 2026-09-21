@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#eefaff">
+
 <title>IKA BATTLE</title>
 
 <style>
@@ -14,30 +15,45 @@
 }
 
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Sans",
+    "Yu Gothic",
+    Meiryo,
+    sans-serif;
+
   background:#eaf8fd;
   color:#173f58;
 }
 
-button{font:inherit;}
+button{
+  font:inherit;
+}
 
 .app{
   width:100%;
   max-width:430px;
   min-height:100vh;
   margin:0 auto;
-  background:linear-gradient(
-    180deg,
-    #fff 0%,
-    #f4fbfe 45%,
-    #dff5fc 78%,
-    #aee5f5 100%
-  );
-  padding-bottom:78px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f4fbfe 45%,
+      #dff5fc 78%,
+      #aee5f5 100%
+    );
+
+  padding-bottom:74px;
   overflow:hidden;
 }
 
-/* ===== HEADER ===== */
+
+/* =========================
+   HEADER
+========================= */
 
 .hero{
   position:relative;
@@ -50,32 +66,29 @@ button{font:inherit;}
   height:auto;
 }
 
-.season-text{
-  position:absolute;
-  left:50%;
-  top:57%;
-  transform:translateX(-50%);
-  color:#fff;
-  font-size:clamp(10px,3.2vw,14px);
-  font-weight:700;
-  letter-spacing:.26em;
-  white-space:nowrap;
-  text-shadow:0 1px 4px rgba(0,78,120,.30);
-}
 
-/* ===== MAIN ===== */
+/* =========================
+   MAIN
+========================= */
 
 main{
   padding:8px 15px 22px;
 }
 
-/* ===== CARD COMMON ===== */
+
+/* =========================
+   CARD COMMON
+========================= */
 
 .card{
   position:relative;
   overflow:hidden;
+
   border-radius:20px;
-  box-shadow:0 5px 15px rgba(42,109,143,.10);
+
+  box-shadow:
+    0 5px 15px
+    rgba(42,109,143,.10);
 }
 
 .card-image{
@@ -84,92 +97,129 @@ main{
   height:auto;
 }
 
-/* ===== ANNUAL ===== */
+
+/* =========================
+   ANNUAL
+========================= */
 
 .annual-card{
   width:100%;
 }
 
-/* 年間王者中央 */
+
+/* 年間王者 中央 */
 
 .annual-winner{
   position:absolute;
+
   left:50%;
-  top:31%;
+  top:30%;
+
   transform:translateX(-50%);
-  width:35%;
+
+  width:34%;
+
   text-align:center;
   white-space:nowrap;
 }
 
 .annual-winner-name{
   display:block;
+
   color:#073c5d;
-  font-size:clamp(15px,4.5vw,20px);
+
+  font-size:
+    clamp(15px,4.4vw,20px);
+
   font-weight:900;
-  line-height:1.1;
+
+  line-height:1;
 }
 
 .annual-winner-score{
   display:block;
-  margin-top:3px;
+
+  margin-top:6px;
+
   color:#0794d0;
-  font-size:clamp(25px,7.4vw,33px);
+
+  font-size:
+    clamp(26px,7.5vw,34px);
+
   font-weight:900;
-  line-height:1;
+
+  line-height:.95;
 }
 
-.annual-winner-score small{
-  font-size:.55em;
-  font-weight:900;
-}
 
-/* 年間順位3人 */
+/* 年間順位 */
 
 .annual-ranking{
   position:absolute;
+
   left:5%;
   right:5%;
   bottom:7%;
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:5%;
 }
 
 .annual-person{
+  padding-left:22%;
+
   text-align:center;
   white-space:nowrap;
-  padding-left:22%;
 }
 
 .annual-person-name{
   display:block;
+
   color:#123f59;
-  font-size:clamp(10px,3vw,13px);
+
+  font-size:
+    clamp(10px,3vw,13px);
+
   font-weight:900;
-  line-height:1.15;
+
+  line-height:1.05;
 }
 
 .annual-person-score{
   display:block;
-  margin-top:2px;
+
+  margin-top:4px;
+
   color:#078cc7;
-  font-size:clamp(14px,4.2vw,19px);
+
+  font-size:
+    clamp(15px,4.3vw,19px);
+
   font-weight:900;
+
   line-height:1;
 }
 
-.annual-person-score small{
-  font-size:.58em;
-}
 
-/* ===== MVP + TAKO ===== */
+/* =========================
+   MVP + TAKO
+========================= */
 
 .mini-grid{
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(0,1fr);
+
   gap:8px;
+
   margin-top:8px;
+
   align-items:start;
 }
 
@@ -178,46 +228,66 @@ main{
   border-radius:18px;
 }
 
-/* MVP */
+
+/* =========================
+   MVP
+========================= */
 
 .mvp-data{
   position:absolute;
+
   left:10%;
-  top:43%;
+  top:44%;
+
   text-align:left;
+
   white-space:nowrap;
 }
 
 .mvp-name{
   display:block;
+
   color:#073e60;
-  font-size:clamp(12px,3.8vw,17px);
+
+  font-size:
+    clamp(12px,3.8vw,17px);
+
   font-weight:900;
-  line-height:1.15;
+
+  line-height:1;
 }
 
 .mvp-score{
   display:block;
-  margin-top:3px;
+
+  margin-top:7px;
+
   color:#098ec8;
-  font-size:clamp(19px,5.7vw,25px);
+
+  font-size:
+    clamp(20px,5.8vw,26px);
+
   font-weight:900;
+
   line-height:1;
 }
 
-.mvp-score small{
-  font-size:.55em;
-}
 
-/* TAKO */
+/* =========================
+   TAKO
+========================= */
 
 .tako-ranking{
   position:absolute;
+
   left:4%;
   right:4%;
-  bottom:8%;
+  bottom:9%;
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
 }
 
 .tako-person{
@@ -227,94 +297,148 @@ main{
 
 .tako-name{
   display:block;
+
   color:#173f58;
-  font-size:clamp(8px,2.3vw,10px);
+
+  font-size:
+    clamp(8px,2.3vw,10px);
+
   font-weight:900;
+
+  line-height:1;
 }
 
 .tako-score{
   display:block;
-  margin-top:2px;
+
+  margin-top:7px;
+
   color:#d9555b;
-  font-size:clamp(13px,3.6vw,16px);
+
+  font-size:
+    clamp(13px,3.6vw,16px);
+
   font-weight:900;
+
+  line-height:1;
 }
 
-.tako-score small{
-  font-size:.6em;
-}
 
-/* ===== RECENT ===== */
+/* =========================
+   RECENT
+========================= */
 
 .recent{
   margin-top:10px;
+
   padding:13px 14px 10px;
-  background:rgba(255,255,255,.95);
+
+  background:
+    rgba(255,255,255,.95);
+
   border-radius:20px;
-  box-shadow:0 5px 15px rgba(45,109,140,.09);
+
+  box-shadow:
+    0 5px 15px
+    rgba(45,109,140,.09);
 }
 
 .recent-header{
   display:flex;
+
   align-items:center;
   justify-content:space-between;
+
   padding-bottom:8px;
-  border-bottom:1px solid #e3eef3;
+
+  border-bottom:
+    1px solid #e3eef3;
 }
 
 .recent-title-wrap{
   display:flex;
+
   align-items:center;
+
   gap:8px;
 }
 
 .recent-title-icon{
   display:grid;
+
   place-items:center;
+
   width:29px;
   height:29px;
+
   border-radius:50%;
+
   background:#e5f6fc;
 }
 
 .recent-title-icon img{
   width:22px;
   height:22px;
+
   object-fit:contain;
 }
 
 .recent-title{
   color:#247ca8;
+
   font-size:13px;
   font-weight:900;
+
   letter-spacing:.13em;
 }
 
 .recent-title-jp{
   margin-top:1px;
+
   color:#3084aa;
+
   font-size:9px;
   font-weight:700;
 }
 
 .view-all{
   border:none;
+
   padding:7px 12px;
+
   border-radius:999px;
+
   background:#e9f7fc;
+
   color:#36728f;
+
   font-size:9px;
   font-weight:800;
+
   cursor:pointer;
 }
 
+
+/* 釣果 */
+
 .catch-row{
   display:grid;
-  grid-template-columns:48px 70px 35px 1fr auto;
+
+  grid-template-columns:
+    48px
+    70px
+    35px
+    1fr
+    auto;
+
   align-items:center;
+
   min-height:47px;
-  border-bottom:1px solid #e8eff2;
+
   column-gap:5px;
+
+  border-bottom:
+    1px solid #e8eff2;
 }
 
 .catch-row:last-child{
@@ -328,6 +452,7 @@ main{
 
 .catch-name{
   color:#173f58;
+
   font-size:12px;
   font-weight:800;
 }
@@ -335,7 +460,9 @@ main{
 .catch-icon{
   width:29px;
   height:29px;
+
   object-fit:contain;
+
   justify-self:center;
 }
 
@@ -346,8 +473,10 @@ main{
 
 .catch-score{
   color:#1486c6;
+
   font-size:17px;
   font-weight:900;
+
   white-space:nowrap;
 }
 
@@ -355,147 +484,252 @@ main{
   font-size:9px;
 }
 
-/* ===== REGISTER ===== */
+
+/* =========================
+   REGISTER AREA
+========================= */
 
 .register-area{
   position:relative;
-  margin-top:13px;
-  min-height:100px;
+
+  margin-top:12px;
+
+  min-height:120px;
+
   display:flex;
-  align-items:center;
+
+  align-items:flex-start;
   justify-content:center;
-  padding-bottom:8px;
+
+  padding-top:18px;
+  padding-bottom:20px;
 }
 
 .register-note{
   position:absolute;
+
   left:0;
-  bottom:10px;
-  color:rgba(255,255,255,.98);
+  bottom:17px;
+
+  color:
+    rgba(255,255,255,.98);
+
   font-size:10px;
+
   line-height:1.55;
+
   transform:rotate(-5deg);
-  text-shadow:0 1px 4px rgba(29,111,150,.30);
+
+  text-shadow:
+    0 1px 4px
+    rgba(29,111,150,.30);
 }
 
 .register-button{
   position:relative;
+
   z-index:2;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   gap:10px;
+
   width:68%;
+
   min-height:53px;
-  border:2px solid rgba(255,255,255,.9);
+
+  border:
+    2px solid
+    rgba(255,255,255,.9);
+
   border-radius:999px;
-  background:linear-gradient(135deg,#19c0e4,#047ac7);
+
+  background:
+    linear-gradient(
+      135deg,
+      #19c0e4,
+      #047ac7
+    );
+
   color:#fff;
+
   font-size:15px;
   font-weight:900;
-  box-shadow:0 6px 15px rgba(12,121,180,.25);
+
+  box-shadow:
+    0 6px 15px
+    rgba(12,121,180,.25);
+
   cursor:pointer;
 }
 
 .register-plus{
   display:grid;
+
   place-items:center;
+
   width:29px;
   height:29px;
+
   border-radius:50%;
+
   background:#fff;
+
   color:#148bc9;
+
   font-size:25px;
   font-weight:500;
+
   line-height:1;
 }
 
 .register-arrow{
   position:absolute;
+
   right:14px;
+
   font-size:25px;
   font-weight:300;
 }
 
-/* 魚影 */
+
+/* =========================
+   FISH
+========================= */
 
 .fish-decoration{
   position:absolute;
+
   right:0;
-  bottom:4px;
+  bottom:12px;
+
   width:62px;
   height:50px;
+
   opacity:.38;
 }
 
 .fish{
   position:absolute;
+
   width:24px;
   height:9px;
-  border-radius:70% 35% 35% 70%;
+
+  border-radius:
+    70% 35% 35% 70%;
+
   background:#147eb0;
+
   transform:rotate(-24deg);
 }
 
 .fish::after{
   content:"";
+
   position:absolute;
+
   right:-7px;
   top:1px;
+
   width:0;
   height:0;
-  border-top:4px solid transparent;
-  border-bottom:4px solid transparent;
-  border-left:8px solid #147eb0;
+
+  border-top:
+    4px solid transparent;
+
+  border-bottom:
+    4px solid transparent;
+
+  border-left:
+    8px solid #147eb0;
 }
 
 .fish.one{
   right:5px;
   top:3px;
-  transform:rotate(-27deg) scale(1.15);
+
+  transform:
+    rotate(-27deg)
+    scale(1.15);
 }
 
 .fish.two{
   right:30px;
   top:25px;
-  transform:rotate(-22deg) scale(.78);
+
+  transform:
+    rotate(-22deg)
+    scale(.78);
 }
 
 .fish.three{
   right:5px;
   top:36px;
-  transform:rotate(-18deg) scale(.65);
+
+  transform:
+    rotate(-18deg)
+    scale(.65);
 }
 
-/* ===== BOTTOM NAV ===== */
+
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottom-nav{
   position:fixed;
+
   left:50%;
   bottom:0;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   z-index:100;
+
   width:100%;
   max-width:430px;
+
   height:74px;
+
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  background:rgba(255,255,255,.98);
-  border-top:1px solid #e1edf2;
-  box-shadow:0 -4px 14px rgba(47,97,121,.06);
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  background:
+    rgba(255,255,255,.98);
+
+  border-top:
+    1px solid #e1edf2;
+
+  box-shadow:
+    0 -4px 14px
+    rgba(47,97,121,.06);
 }
 
 .nav-item{
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
   justify-content:center;
+
   gap:3px;
+
   border:none;
+
   background:transparent;
+
   color:#7895a5;
+
   font-size:9px;
   font-weight:800;
+
   cursor:pointer;
 }
 
@@ -505,50 +739,76 @@ main{
 
 .nav-icon{
   position:relative;
+
   width:24px;
   height:24px;
 }
+
 
 /* HOME */
 
 .home-icon::before{
   content:"";
+
   position:absolute;
+
   left:5px;
   top:9px;
+
   width:14px;
   height:12px;
-  border:2px solid currentColor;
+
+  border:
+    2px solid currentColor;
+
   border-top:none;
+
   border-radius:2px;
 }
 
 .home-icon::after{
   content:"";
+
   position:absolute;
+
   left:5px;
   top:4px;
+
   width:13px;
   height:13px;
-  border-left:2px solid currentColor;
-  border-top:2px solid currentColor;
-  transform:rotate(45deg);
+
+  border-left:
+    2px solid currentColor;
+
+  border-top:
+    2px solid currentColor;
+
+  transform:
+    rotate(45deg);
 }
+
 
 /* PLUS */
 
 .plus-icon{
-  border:2px solid currentColor;
+  border:
+    2px solid currentColor;
+
   border-radius:50%;
 }
 
 .plus-icon::before,
 .plus-icon::after{
   content:"";
+
   position:absolute;
+
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%);
+
+  transform:
+    translate(-50%,-50%);
+
   background:currentColor;
 }
 
@@ -562,78 +822,124 @@ main{
   height:10px;
 }
 
+
 /* HISTORY */
 
 .history-icon::before{
   content:"";
+
   position:absolute;
+
   left:3px;
   top:4px;
+
   width:4px;
   height:4px;
+
   border-radius:50%;
+
   background:currentColor;
-  box-shadow:0 7px 0 currentColor,0 14px 0 currentColor;
+
+  box-shadow:
+    0 7px 0 currentColor,
+    0 14px 0 currentColor;
 }
 
 .history-icon::after{
   content:"";
+
   position:absolute;
+
   left:10px;
   top:5px;
+
   width:12px;
   height:2px;
+
   background:currentColor;
-  box-shadow:0 7px 0 currentColor,0 14px 0 currentColor;
+
+  box-shadow:
+    0 7px 0 currentColor,
+    0 14px 0 currentColor;
 }
+
 
 /* DATA */
 
 .data-icon{
-  border-bottom:2px solid currentColor;
+  border-bottom:
+    2px solid currentColor;
 }
 
 .data-icon::before{
   content:"";
+
   position:absolute;
+
   left:4px;
   bottom:2px;
+
   width:4px;
   height:9px;
+
   background:currentColor;
-  box-shadow:7px -6px 0 currentColor,14px -12px 0 currentColor;
+
+  box-shadow:
+    7px -6px 0 currentColor,
+    14px -12px 0 currentColor;
 }
 
+
+/* =========================
+   PC
+========================= */
+
 @media(min-width:431px){
+
   body{
     padding:10px 0;
   }
 
   .app{
-    min-height:calc(100vh - 20px);
+    min-height:
+      calc(100vh - 20px);
   }
 
   .bottom-nav{
     bottom:10px;
   }
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
+
   <!-- HEADER -->
+
   <header class="hero">
-    <img src="images/header.png" alt="IKA BATTLE">
-    <div class="season-text" id="seasonText"></div>
+
+    <img
+      src="images/header.png"
+      alt="IKA BATTLE"
+    >
+
   </header>
+
 
   <main>
 
-    <!-- 年間王者 -->
-    <section class="card annual-card">
+
+    <!-- =====================
+         年間王者
+    ====================== -->
+
+    <section
+      class="card annual-card">
 
       <img
         class="card-image"
@@ -641,7 +947,9 @@ main{
         alt="年間王者"
       >
 
+
       <div class="annual-winner">
+
         <span
           class="annual-winner-name"
           id="annualWinnerName">
@@ -651,7 +959,9 @@ main{
           class="annual-winner-score"
           id="annualWinnerScore">
         </span>
+
       </div>
+
 
       <div
         class="annual-ranking"
@@ -661,10 +971,18 @@ main{
     </section>
 
 
-    <!-- MVP + タコ -->
+
+    <!-- =====================
+         MVP + タコ
+    ====================== -->
+
     <div class="mini-grid">
 
-      <section class="card mini-card">
+
+      <!-- MVP -->
+
+      <section
+        class="card mini-card">
 
         <img
           class="card-image"
@@ -689,7 +1007,11 @@ main{
       </section>
 
 
-      <section class="card mini-card">
+
+      <!-- タコ -->
+
+      <section
+        class="card mini-card">
 
         <img
           class="card-image"
@@ -704,24 +1026,36 @@ main{
 
       </section>
 
+
     </div>
 
 
-    <!-- RECENT -->
+
+    <!-- =====================
+         RECENT CATCHES
+    ====================== -->
+
     <section class="recent">
+
 
       <div class="recent-header">
 
+
         <div class="recent-title-wrap">
 
+
           <div class="recent-title-icon">
+
             <img
               src="images/aori-icon.png"
               alt=""
             >
+
           </div>
 
+
           <div>
+
             <div class="recent-title">
               RECENT CATCHES
             </div>
@@ -729,18 +1063,27 @@ main{
             <div class="recent-title-jp">
               最近の釣果
             </div>
+
           </div>
 
+
         </div>
+
 
         <button
           class="view-all"
           type="button">
+
           すべて見る 〉
+
         </button>
+
 
       </div>
 
+
+
+      <!-- 1 -->
 
       <div class="catch-row">
 
@@ -769,6 +1112,9 @@ main{
       </div>
 
 
+
+      <!-- 2 -->
+
       <div class="catch-row">
 
         <div class="catch-date">
@@ -796,6 +1142,9 @@ main{
       </div>
 
 
+
+      <!-- 3 -->
+
       <div class="catch-row">
 
         <div class="catch-date">
@@ -822,16 +1171,25 @@ main{
 
       </div>
 
+
     </section>
 
 
-    <!-- 登録 -->
+
+    <!-- =====================
+         登録ボタン
+    ====================== -->
+
     <section class="register-area">
 
+
       <div class="register-note">
+
         釣ったイカが<br>
         思い出になる。
+
       </div>
+
 
       <button
         class="register-button"
@@ -853,42 +1211,96 @@ main{
 
 
       <div class="fish-decoration">
+
         <span class="fish one"></span>
         <span class="fish two"></span>
         <span class="fish three"></span>
+
       </div>
+
 
     </section>
 
+
   </main>
+
 
 </div>
 
 
-<!-- 下部ナビ -->
+
+<!-- =====================
+     BOTTOM NAV
+===================== -->
+
 <nav class="bottom-nav">
 
-  <button class="nav-item active">
-    <span class="nav-icon home-icon"></span>
-    <span>ホーム</span>
+
+  <button
+    class="nav-item active"
+    type="button">
+
+    <span
+      class="nav-icon home-icon">
+    </span>
+
+    <span>
+      ホーム
+    </span>
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon plus-icon"></span>
-    <span>釣果登録</span>
+
+
+  <button
+    class="nav-item"
+    type="button">
+
+    <span
+      class="nav-icon plus-icon">
+    </span>
+
+    <span>
+      釣果登録
+    </span>
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon history-icon"></span>
-    <span>履歴</span>
+
+
+  <button
+    class="nav-item"
+    type="button">
+
+    <span
+      class="nav-icon history-icon">
+    </span>
+
+    <span>
+      履歴
+    </span>
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon data-icon"></span>
-    <span>データ</span>
+
+
+  <button
+    class="nav-item"
+    type="button">
+
+    <span
+      class="nav-icon data-icon">
+    </span>
+
+    <span>
+      データ
+    </span>
+
   </button>
+
 
 </nav>
+
 
 
 <script>
@@ -896,153 +1308,214 @@ main{
 /*
 =================================
   仮データ
-  後で本物の釣果データに置き換える
+  ↓
+  あとで登録データへ接続する
 =================================
 */
 
 const battleData = {
 
   annual: [
+
     {
-      name: "ひろき",
-      score: 42
+      name:"ひろき",
+      score:42
     },
+
     {
-      name: "ゆうま",
-      score: 37
+      name:"ゆうま",
+      score:37
     },
+
     {
-      name: "まさき",
-      score: 31
+      name:"まさき",
+      score:31
     }
+
   ],
 
-  monthlyMvp: {
-    name: "まさき",
-    score: 18
+
+  monthlyMvp:{
+
+    name:"まさき",
+    score:18
+
   },
 
-  tako: [
+
+  tako:[
+
     {
-      name: "ひろき",
-      score: 2
+      name:"ひろき",
+      score:2
     },
+
     {
-      name: "ゆうま",
-      score: 0
+      name:"ゆうま",
+      score:0
     },
+
     {
-      name: "まさき",
-      score: 1
+      name:"まさき",
+      score:1
     }
+
   ]
 
 };
 
 
-/* ===== 年表示 ===== */
 
-const year =
-  new Date().getFullYear();
-
-document
-  .getElementById("seasonText")
-  .textContent =
-  year + " SEASON";
-
-
-/* ===== 年間王者 ===== */
+/* =====================
+   年間王者
+===================== */
 
 const annual =
   [...battleData.annual]
-  .sort((a,b) => b.score - a.score);
+  .sort(
+    (a,b) =>
+    b.score - a.score
+  );
+
 
 const winner =
   annual[0];
 
+
 document
-  .getElementById("annualWinnerName")
+  .getElementById(
+    "annualWinnerName"
+  )
   .textContent =
   winner.name;
 
-document
-  .getElementById("annualWinnerScore")
-  .innerHTML =
-  winner.score + "<small>杯</small>";
 
+document
+  .getElementById(
+    "annualWinnerScore"
+  )
+  .textContent =
+  winner.score;
+
+
+
+/* 年間順位 */
 
 const annualRanking =
   document.getElementById(
     "annualRanking"
   );
 
-annual.forEach(person => {
 
-  annualRanking.insertAdjacentHTML(
-    "beforeend",
+annual.forEach(
+  person => {
 
-    `
-      <div class="annual-person">
+    annualRanking
+      .insertAdjacentHTML(
 
-        <span class="annual-person-name">
-          ${person.name}
-        </span>
+        "beforeend",
 
-        <span class="annual-person-score">
-          ${person.score}<small>杯</small>
-        </span>
+        `
+        <div class="annual-person">
 
-      </div>
-    `
-  );
+          <span
+            class="annual-person-name">
 
-});
+            ${person.name}
+
+          </span>
+
+          <span
+            class="annual-person-score">
+
+            ${person.score}
+
+          </span>
+
+        </div>
+        `
+
+      );
+
+  }
+);
 
 
-/* ===== MONTHLY MVP ===== */
+
+/* =====================
+   MONTHLY MVP
+===================== */
 
 document
-  .getElementById("mvpName")
+  .getElementById(
+    "mvpName"
+  )
   .textContent =
-  battleData.monthlyMvp.name;
+  battleData
+    .monthlyMvp
+    .name;
+
 
 document
-  .getElementById("mvpScore")
-  .innerHTML =
-  battleData.monthlyMvp.score +
-  "<small>杯</small>";
+  .getElementById(
+    "mvpScore"
+  )
+  .textContent =
+  battleData
+    .monthlyMvp
+    .score;
 
 
-/* ===== タコ部門 ===== */
+
+/* =====================
+   タコ
+===================== */
 
 const takoRanking =
   document.getElementById(
     "takoRanking"
   );
 
-battleData.tako.forEach(person => {
 
-  takoRanking.insertAdjacentHTML(
-    "beforeend",
+battleData
+  .tako
+  .forEach(
 
-    `
-      <div class="tako-person">
+    person => {
 
-        <span class="tako-name">
-          ${person.name}
-        </span>
+      takoRanking
+        .insertAdjacentHTML(
 
-        <span class="tako-score">
-          ${person.score}<small>匹</small>
-        </span>
+          "beforeend",
 
-      </div>
-    `
+          `
+          <div class="tako-person">
+
+            <span
+              class="tako-name">
+
+              ${person.name}
+
+            </span>
+
+            <span
+              class="tako-score">
+
+              ${person.score}
+
+            </span>
+
+          </div>
+          `
+
+        );
+
+    }
+
   );
 
-});
-
 </script>
+
 
 </body>
 </html>
