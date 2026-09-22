@@ -97,7 +97,6 @@ main{
   height:auto;
 }
 
-
 /* =========================
    ANNUAL
 ========================= */
@@ -106,100 +105,73 @@ main{
   width:100%;
 }
 
-
 /* 年間王者 中央 */
 
 .annual-winner{
   position:absolute;
-
   left:50%;
   top:24%;
-
   transform:translateX(-50%);
-
   width:28%;
-
   text-align:center;
   white-space:nowrap;
 }
 
 .annual-winner-name{
   display:block;
-
   color:#073c5d;
-
-  font-size: clamp(12px, 3vw, 14px);
-
+  font-size:clamp(12px, 3vw, 14px);
   font-weight:900;
-
   line-height:1;
+  transform:translateY(3px);
 }
 
 .annual-winner-score{
   display:block;
-
   margin-top:10px;
-
   color:#0794d0;
-
-  font-size: clamp(18px, 4.7vw, 22px);
-
+  font-size:clamp(18px, 4.7vw, 22px);
   font-weight:900;
-
   line-height:.95;
 }
-
-  transform: translateY(3px);
 
 /* 年間順位 */
 
 .annual-ranking{
   position:absolute;
-
   left:5%;
   right:5%;
   bottom:10%;
 
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:5%;
 }
 
 .annual-person{
   padding-left:30%;
-
   text-align:center;
   white-space:nowrap;
 }
 
 .annual-person-name{
   display:block;
-
   color:#123f59;
-
-  font-size: clamp(10px, 2.6vw, 12px);
-  
+  font-size:clamp(10px, 2.6vw, 12px);
   font-weight:900;
-
   line-height:1.05;
 }
 
 .annual-person-score{
   display:block;
-
   margin-top:4px;
-
   color:#078cc7;
-
-  font-size: clamp(13px, 3.3vw, 16px);  
-
+  font-size:clamp(13px, 3.3vw, 16px);
   font-weight:900;
-
   line-height:1;
+  transform:translateX(6px);
 }
+
 
 /* =========================
    MVP + TAKO
@@ -207,15 +179,9 @@ main{
 
 .mini-grid{
   display:grid;
-
-  grid-template-columns:
-    minmax(0,1fr)
-    minmax(0,1fr);
-
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:8px;
-
   margin-top:8px;
-
   align-items:start;
 }
 
@@ -231,42 +197,30 @@ main{
 
 .mvp-data{
   position:absolute;
-
   left:14%;
   top:44%;
-
   text-align:left;
-
   white-space:nowrap;
 }
 
 .mvp-name{
   display:block;
-
   color:#073e60;
-
-  font-size: clamp(11px, 2.8vw, 13px);
-
+  font-size:clamp(11px, 2.8vw, 13px);
   font-weight:900;
-
   line-height:1;
 }
 
 .mvp-score{
   display:block;
-
   margin-top:7px;
-
   color:#098ec8;
-
-  font-size: clamp(17px, 4.4vw, 21px);
-  
+  font-size:clamp(17px, 4.4vw, 21px);
   font-weight:900;
-
   line-height:1;
+  transform:translateX(6px);
 }
 
-  transform: translateX(6px);
 
 /* =========================
    TAKO
@@ -274,49 +228,38 @@ main{
 
 .tako-ranking{
   position:absolute;
-
   left:4%;
   right:4%;
   bottom:9%;
 
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
+  grid-template-columns:repeat(3,1fr);
 }
 
 .tako-person{
+  padding-left:10%;
   text-align:center;
   white-space:nowrap;
-  padding-left:10%;
 }
+
 .tako-name{
   display:block;
-
   color:#173f58;
-
-  font-size: clamp(9px, 2.3vw, 11px);
-
+  font-size:clamp(9px, 2.3vw, 11px);
   font-weight:900;
-
   line-height:1;
 }
 
 .tako-score{
   display:block;
-
   margin-top:7px;
-
   color:#d9555b;
-
- font-size: clamp(14px, 3.5vw, 17px);
-
+  font-size:clamp(14px, 3.5vw, 17px);
   font-weight:900;
-
   line-height:1;
+  transform:translateX(4px);
 }
 
-  transform: translateX(4px);
 
 /* =========================
    RECENT
