@@ -852,6 +852,12 @@ main{
 #catch-registration .entry-submit:disabled{opacity:.65;cursor:default;}
 #catch-registration .entry-next{display:block;margin:8px auto 0;min-height:44px;padding:8px 16px;border:1px solid #b7e2f1;border-radius:999px;background:#eaf8fe;color:#078bc6;font-size:13px;font-weight:800;cursor:pointer;}
 #catch-registration .entry-next[hidden]{display:none;}
+#catch-registration .entry-completion[hidden]{display:none;}
+#catch-registration.is-complete > :not(.entry-completion){display:none;}
+#catch-registration .entry-completion{max-width:440px;margin:40px auto;padding:32px 20px;text-align:center;background:white;border:1px solid #e0f1f7;border-radius:22px;box-shadow:0 5px 15px rgba(42,109,143,.10);}
+#catch-registration .entry-completion h2{margin:0 0 28px;color:#173f58;font-size:26px;}
+#catch-registration .entry-completion button{display:block;width:100%;min-height:54px;margin:14px 0 0;font-size:16px;}
+body.entry-complete .bottom-nav{display:none;}
 #catch-history[hidden]{display:none;}
 #catch-history{padding:16px 20px 18px;}
 #catch-history .history-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:8px;padding:8px 14px;border:1px solid #cde8f3;border-radius:999px;background:#eefaff;color:#247ca8;font-size:13px;font-weight:800;cursor:pointer;}
@@ -1215,9 +1221,13 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
       </div>
       <button class="entry-submit" type="submit">登録する</button>
       <p id="entry-feedback" class="entry-feedback" role="status" aria-live="polite"></p>
-      <button id="entry-next" class="entry-next" type="button" hidden>続けて登録する</button>
     </form>
     <p class="entry-preview-note">釣果はみんなで共有されます。編集・削除は登録した本人だけが行えます。</p>
+    <div id="entry-completion" class="entry-completion" hidden>
+      <h2 id="entry-complete-title" tabindex="-1">登録しました！</h2>
+      <button id="entry-next" class="entry-next" type="button">続けて登録する</button>
+      <button id="entry-home" class="entry-next" type="button">ホームに戻る</button>
+    </div>
   </section>
 
   <section id="catch-data" aria-labelledby="data-title" hidden>
@@ -1835,6 +1845,7 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
   }
 
   function resetEditor() {
+    closeCompletion();
     editingRecord = null;
     form.reset();
     const now = new Date();
@@ -1883,6 +1894,7 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
   nav[0].setAttribute('aria-current','page');
   function showPage(next) {
     if(mutationBusy||!authScreen.hidden)return;
+    if(next !== 1) closeCompletion();
     // Every new-entry visit starts fresh, including abandoned or changed drafts.
     // startEdit sets editingRecord before navigation so saved values are retained.
     if (next === 1 && !editingRecord) resetEditor();
@@ -1936,10 +1948,14 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
     clearFeedback();
   }
   minus.addEventListener('click',()=>updateCount(-1));
+  function closeCompletion() {
+    registration.classList.remove('is-complete');
+    document.body.classList.remove('entry-complete');
+    document.getElementById('entry-completion').hidden=true;
+  }
+  document.getElementById('entry-home').addEventListener('click',()=>showPage(0));
   nextEntry.addEventListener('click',()=>{
-    count = 1;
-    updateCount(0);
-    date.focus();
+    showPage(1);
   });
   document.getElementById('count-plus').addEventListener('click',()=>updateCount(1));
   form.addEventListener('input',clearFeedback);
@@ -1976,7 +1992,14 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
       cloudRecords=original ? cloudRecords.map(item=>item.id===saved.id?saved:item) : [...cloudRecords.filter(item=>item.id!==saved.id),saved];
       mutationBusy=false;
       if(original){showPage(2);renderHome();status.textContent='変更を保存しました。 '+status.textContent;}
-      else{submitted=true;feedback.textContent='登録しました！';nextEntry.hidden=false;renderHome();}
+      else{
+        submitted=true;feedback.textContent='';nextEntry.hidden=false;renderHome();
+        registration.classList.add('is-complete');
+        document.body.classList.add('entry-complete');
+        document.getElementById('entry-completion').hidden=false;
+        window.scrollTo(0,0);
+        document.getElementById('entry-complete-title').focus({preventScroll:true});
+      }
       banner.hidden=true;
     } catch(error) {
       feedback.textContent=readableError(error);
