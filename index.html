@@ -859,6 +859,7 @@ main{
 /* 釣果登録画面：ホームの既存スタイルには変更を加えない */
 #catch-registration[hidden]{display:none;}
 #catch-registration{padding:30px 20px 28px;}
+#catch-registration .entry-back{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-bottom:16px;padding:8px 14px;border:1px solid #cde8f3;border-radius:999px;background:#eefaff;color:#247ca8;font-size:13px;font-weight:800;cursor:pointer;}
 #catch-registration .entry-kicker{color:#2486ac;font-size:11px;font-weight:800;letter-spacing:.16em;}
 #catch-registration h1{margin:5px 0 8px;font-size:26px;color:#173f58;}
 #catch-registration .entry-intro{font-size:13px;line-height:1.7;color:#527d92;margin-bottom:22px;}
@@ -1196,6 +1197,7 @@ main{
   </main>
 
   <section id="catch-registration" aria-labelledby="entry-title" hidden>
+    <button id="entry-back" class="entry-back" type="button" aria-label="ホームに戻る"><span aria-hidden="true">←</span> 戻る</button>
     <p class="entry-kicker">IKA BATTLE / CATCH</p>
     <h1 id="entry-title" tabindex="-1">釣果登録</h1>
     <p class="entry-intro">今日の釣果を、ひとつずつ。</p>
@@ -1556,6 +1558,10 @@ battleData
   document.querySelector('.register-button').addEventListener('click',()=>showRegistration(true));
   nav[1].addEventListener('click',()=>showRegistration(true));
   nav[0].addEventListener('click',()=>showRegistration(false));
+  document.getElementById('entry-back').addEventListener('click',()=>{
+    showRegistration(false);
+    document.querySelector('.register-button').focus({preventScroll:true});
+  });
   function updateCount(delta) {
     count = Math.max(1,count + delta);
     document.getElementById('catch-count').textContent = count;
