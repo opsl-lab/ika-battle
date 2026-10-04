@@ -900,13 +900,69 @@ main{
 #catch-data tbody td:last-child{color:#d9555b;}
 #catch-data tbody th,#catch-data tbody td{padding:15px 2px;border-top:1px solid #e3f0f5;}
 #catch-data .data-note{font-size:11px;line-height:1.7;color:#527d92;margin-top:12px;}
+/* 共有保存とログイン。既存ホームのスタイルは保持。 */
+[hidden]{display:none!important;}
+body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
+#auth-screen{max-width:430px;min-height:100vh;margin:auto;padding:52px 22px 28px;background:linear-gradient(180deg,#fff,#e4f7fd);}
+#auth-screen .auth-kicker{color:#2486ac;font-size:12px;font-weight:800;letter-spacing:.16em;}
+#auth-screen h1{font-size:23px;margin:12px 0;line-height:1.5;}
+#auth-screen .auth-intro,#auth-screen .auth-help,#auth-screen .auth-footnote{font-size:12px;color:#527d92;line-height:1.8;}
+#auth-screen .auth-card{background:#fff;border:1px solid #e0f1f7;border-radius:22px;padding:20px 18px;margin-top:24px;box-shadow:0 5px 15px rgba(42,109,143,.10);}
+#auth-screen .auth-tabs{display:flex;gap:8px;margin-bottom:18px;}
+#auth-screen .auth-tabs button{flex:1;border:1px solid #cde8f3;border-radius:999px;background:#f5fcff;color:#527d92;min-height:44px;font-size:13px;font-weight:800;cursor:pointer;}
+#auth-screen .auth-tabs button[aria-pressed=true]{color:#087db6;background:#e2f6ff;border-color:#18a6d6;}
+#auth-screen label{display:block;font-size:13px;font-weight:800;margin-bottom:16px;}
+#auth-screen input{display:block;width:100%;min-width:0;min-height:48px;margin-top:8px;border:1px solid #b8dfef;border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;background:#f5fcff;color:#173f58;}
+#auth-screen .auth-primary{width:100%;min-height:54px;margin-top:16px;border:0;border-radius:999px;background:linear-gradient(135deg,#19c0e4,#047ac7);color:#fff;font-weight:900;font-size:16px;cursor:pointer;}
+#auth-screen .auth-link{display:block;min-height:44px;margin:8px auto 0;padding:8px;border:0;background:transparent;color:#247ca8;font-size:12px;cursor:pointer;}
+#auth-screen button:disabled{opacity:.55;cursor:default;}
+#auth-message{font-size:13px;line-height:1.8;margin-top:12px;overflow-wrap:anywhere;}
+#auth-screen .auth-footnote{margin-top:20px;text-align:center;}
+#cloud-banner{padding:12px 16px;background:#fff2d9;color:#775316;font-size:12px;line-height:1.7;}
+#catch-data .cloud-account{margin-top:16px;padding:14px;border:1px solid #cde8f3;border-radius:16px;background:#f5fcff;font-size:12px;line-height:1.8;}
+#catch-data .cloud-account button{min-height:44px;margin:8px 5px 0 0;padding:8px 12px;border:1px solid #cde8f3;border-radius:999px;background:white;color:#247ca8;font-size:12px;cursor:pointer;}
+#cloud-account-name{overflow-wrap:anywhere;}
+#catch-registration .entry-choice span{white-space:normal;overflow-wrap:anywhere;padding:6px;text-align:center;}
+.annual-person-name,.tako-name,.annual-winner-name,.mvp-name{overflow:hidden;text-overflow:ellipsis;}
+.catch-name,.catch-type{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#catch-history .history-person{overflow-wrap:anywhere;}
+#catch-data tbody th{overflow-wrap:anywhere;}
+#more-members{display:block;width:100%;margin:8px 0 0;min-height:36px;border:1px solid #cde8f3;border-radius:999px;background:#f0fbff;color:#247ca8;font-size:11px;font-weight:800;cursor:pointer;}
+
 </style>
 </head>
 
 
-<body>
+<body class="cloud-locked">
+<section id="auth-screen" aria-labelledby="auth-title">
+  <p class="auth-kicker">IKA BATTLE</p>
+  <h1 id="auth-title">みんなの釣果を、ひとつに。</h1>
+  <p class="auth-intro">ログインして、釣り仲間と記録を共有しよう。</p>
+  <div class="auth-card">
+    <div id="auth-tabs" class="auth-tabs">
+      <button type="button" id="auth-login-tab" aria-pressed="true">ログイン</button>
+      <button type="button" id="auth-signup-tab" aria-pressed="false">新規登録</button>
+    </div>
+    <form id="auth-form">
+      <label id="auth-name-field" hidden>表示名<input id="auth-name" type="text" maxlength="20" autocomplete="nickname" placeholder="例：ひろき"></label>
+      <label id="auth-email-field">メールアドレス<input id="auth-email" type="email" autocomplete="email" required></label>
+      <label id="auth-password-field">パスワード<input id="auth-password" type="password" autocomplete="current-password" required></label>
+      <p id="auth-help" class="auth-help">登録したメールアドレスでログインしてください。</p>
+      <button id="auth-submit" type="submit" class="auth-primary">ログイン</button>
+    </form>
+    <button id="auth-forgot" type="button" class="auth-link">パスワードを忘れた方</button>
+    <button id="auth-resend" type="button" class="auth-link" hidden>確認メールを再送する</button>
+    <button id="auth-retry" type="button" class="auth-link" hidden>もう一度読み込む</button>
+    <button id="auth-exit" type="button" class="auth-link" hidden>別のアカウントでログイン</button>
+    <p id="auth-message" role="status" aria-live="polite"></p>
+  </div>
+  <p class="auth-footnote">新規登録はメール確認後に参加できます。<br>釣果の編集・削除は、登録した本人だけが行えます。</p>
+  <noscript>このアプリを使うにはJavaScriptを有効にしてください。</noscript>
+</section>
+
 
 <div class="app">
+<p id="cloud-banner" role="status" hidden></p>
 
 
   <!-- HEADER -->
@@ -1020,6 +1076,8 @@ main{
     </div>
 
 
+
+    <button id="more-members" type="button" hidden>ホームは上位3人を表示 · みんなの記録を見る</button>
 
     <!-- =====================
          RECENT CATCHES
@@ -1137,11 +1195,7 @@ main{
       </div>
       <fieldset class="entry-field">
         <legend class="entry-label">釣った人</legend>
-        <div class="entry-options">
-          <label class="entry-choice"><input type="radio" name="angler" value="ひろき" checked required><span>ひろき</span></label>
-          <label class="entry-choice"><input type="radio" name="angler" value="ゆうま"  required><span>ゆうま</span></label>
-          <label class="entry-choice"><input type="radio" name="angler" value="まさき"  required><span>まさき</span></label>
-        </div>
+        <div id="angler-options" class="entry-options"></div>
       </fieldset>
       <fieldset class="entry-field">
         <legend class="entry-label">種類</legend>
@@ -1163,7 +1217,7 @@ main{
       <p id="entry-feedback" class="entry-feedback" role="status" aria-live="polite"></p>
       <button id="entry-next" class="entry-next" type="button" hidden>続けて登録する</button>
     </form>
-    <p class="entry-preview-note">このブラウザに保存されます。3人での共有はまだできません。</p>
+    <p class="entry-preview-note">釣果はみんなで共有されます。編集・削除は登録した本人だけが行えます。</p>
   </section>
 
   <section id="catch-data" aria-labelledby="data-title" hidden>
@@ -1189,12 +1243,19 @@ main{
     </div>
     <div class="data-card">
       <table class="data-table">
-        <caption>3人の釣果比較</caption>
+        <caption>みんなの釣果比較</caption>
         <thead><tr><th scope="col">釣った人</th><th scope="col">アオリイカ<br><span>（杯）</span></th><th scope="col">コウイカ<br><span>（杯）</span></th><th scope="col">タコ<br><span>（匹）</span></th></tr></thead>
         <tbody id="data-people"></tbody>
       </table>
     </div>
-    <p class="data-note">選んだ期間に釣った記録を集計しています。<br>このブラウザに保存した釣果が対象です。</p>
+    <div class="cloud-account">
+      <p id="cloud-account-name"></p>
+      <button id="cloud-refresh" type="button">最新の記録を読み込む</button>
+      <button id="cloud-logout" type="button">ログアウト</button>
+      <details><summary>以前の端末内の記録</summary><p>以前の記録は自動で共有せず、このブラウザに残しています。必要な記録を書き出して確認できます。</p><button id="local-export" type="button">以前の記録を書き出す</button></details>
+      <p id="cloud-account-status" role="status"></p>
+    </div>
+    <p class="data-note">選んだ期間に釣った記録を集計しています。<br>共有されている釣果が対象です。</p>
   </section>
 
   <section id="catch-history" aria-labelledby="history-title" hidden>
@@ -1204,7 +1265,7 @@ main{
     <p id="history-status" class="history-status" role="status"></p>
     <ul id="history-list" class="history-list" aria-label="登録した釣果"></ul>
     <button id="history-register" class="history-register" type="button">＋ 釣果を登録する</button>
-    <p class="history-note">このブラウザで登録した釣果を表示しています。ブラウザのデータを消すと記録も消えます。</p>
+    <p class="history-note">共有の釣果を表示しています。編集・削除ボタンは自分が登録した記録だけに表示されます。</p>
   </section>
 
 
@@ -1291,6 +1352,7 @@ main{
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
 /* 保存した釣果をホームと履歴で共有する。 */
@@ -1316,23 +1378,279 @@ main{
   let submitted = false;
   const today = new Date();
   date.value = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  // 公開用キーのみ。権限の判定はSupabase側のRLSで行います。
+  const CLOUD_URL = 'https://gbaoqtqntuxasbcmbdvn.supabase.co';
+  const PUBLIC_KEY = 'sb_publishable_GT3RtOmDLDGgVYhK-1531w_JAGftz3g';
+  const SITE_URL = 'https://opsl-lab.github.io/ika-battle/';
+  const authScreen = document.getElementById('auth-screen');
+  const authMessage = document.getElementById('auth-message');
+  const authForm = document.getElementById('auth-form');
+  const authSubmit = document.getElementById('auth-submit');
+  const authEmail = document.getElementById('auth-email');
+  const authPassword = document.getElementById('auth-password');
+  const authName = document.getElementById('auth-name');
+  const banner = document.getElementById('cloud-banner');
+  let cloud = null, currentUser = null, cloudRecords = null, members = [];
+  let authMode = 'login', authBusy = false, mutationBusy = false, sessionEpoch = 0;
+  let syncTask = null, lastSync = 0, pendingInsert = null, recoveryMode = false, authLinkError = false;
+  function authModeSet(mode) {
+    authMode = mode;
+    document.getElementById('auth-tabs').hidden = ['join','recovery','blocked'].includes(mode);
+    authForm.hidden = mode === 'blocked';
+    document.getElementById('auth-name-field').hidden = !['signup','join'].includes(mode);
+    authName.required = ['signup','join'].includes(mode);
+    document.getElementById('auth-email-field').hidden = ['join','recovery','blocked'].includes(mode);
+    authEmail.required = ['signup','login','forgot'].includes(mode);
+    document.getElementById('auth-password-field').hidden = ['join','forgot','blocked'].includes(mode);
+    authPassword.required = ['signup','login','recovery'].includes(mode);
+    authPassword.minLength = mode === 'login' ? 1 : 8;
+    authPassword.autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+    document.getElementById('auth-login-tab').setAttribute('aria-pressed',String(mode === 'login'));
+    document.getElementById('auth-signup-tab').setAttribute('aria-pressed',String(mode === 'signup'));
+    document.getElementById('auth-forgot').hidden = mode !== 'login';
+    document.getElementById('auth-exit').hidden = !currentUser;
+    document.getElementById('auth-retry').hidden = mode !== 'blocked';
+    document.getElementById('auth-resend').hidden = mode !== 'signup';
+    authSubmit.textContent = ({login:'ログイン',signup:'登録して確認メールを送る',forgot:'再設定メールを送る',join:'この名前で参加する',recovery:'新しいパスワードを保存'})[mode] || '続ける';
+    document.getElementById('auth-help').textContent = ({login:'登録したメールアドレスでログインしてください。',signup:'表示名は20文字以内、パスワードは8文字以上。確認メールのリンクから参加できます。',forgot:'登録したメールアドレスに再設定用のリンクを送ります。',join:'参加する名前を入力してください。同じ名前は使えません。管理者の承認は不要です。',recovery:'新しいパスワードを8文字以上で入力してください。'})[mode] || '';
+  }
+  function lockScreen(message='',mode='login') {
+    document.body.classList.add('cloud-locked');
+    authScreen.hidden = false;
+    authModeSet(mode);
+    authMessage.textContent = message;
+  }
+  function unlockScreen() {
+    document.body.classList.remove('cloud-locked');
+    authScreen.hidden = true;
+    authPassword.value = '';
+  }
+  function readableError(error) {
+    const code = error && error.code;
+    if (code === '23505') return 'その表示名は使われています。別の名前を入力してください。';
+    if (code === 'invalid_credentials') return 'メールアドレスまたはパスワードを確認してください。';
+    if (code === 'email_not_confirmed') return '確認メールのリンクを開いてからログインしてください。';
+    if (code === 'over_email_send_rate_limit' || error?.status === 429) return '送信回数の上限です。少し時間をおいてお試しください。';
+    if (code === 'email_address_not_authorized' || code === 'unexpected_failure') return 'メールを送れませんでした。管理者にメール送信設定の確認を依頼してください。';
+    if (code === 'weak_password') return 'より長く推測されにくいパスワードを設定してください。';
+    if (code === 'CONFLICT') return '記録が変更・削除されたか、操作できる権限がありません。最新の履歴を確認してください。';
+    if (code === '42501') return 'この操作は許可されていません。ログイン状態を確認してください。';
+    return '処理を完了できませんでした。通信状態を確認して、もう一度お試しください。';
+  }
+  function memberNames() {
+    return [...new Set([...members.map(member=>member.name),...(cloudRecords || []).map(record=>record.angler)])];
+  }
+  function owns(record) { return !!currentUser && record.created_by === currentUser.id; }
+  function currentAngler() { return form.querySelector('input[name="angler"]:checked')?.value || ''; }
+  function chooseAngler(name) {
+    form.querySelectorAll('input[name="angler"]').forEach(input=>{input.checked=input.value === name;});
+  }
+  function renderMemberChoices() {
+    const selected = currentAngler();
+    const container = document.getElementById('angler-options');
+    const eligible = members.filter(member=>member.active).map(member=>member.name);
+    if (editingRecord && !eligible.includes(editingRecord.angler)) eligible.push(editingRecord.angler);
+    container.replaceChildren();
+    eligible.forEach((name,index)=>{
+      const label = document.createElement('label');label.className='entry-choice';
+      const input=document.createElement('input');input.type='radio';input.name='angler';input.value=name;input.required=true;
+      input.defaultChecked=index===0;
+      const span=document.createElement('span');span.textContent=name;
+      label.append(input,span);container.append(label);
+    });
+    const mine=members.find(member=>member.user_id === currentUser?.id)?.name;
+    chooseAngler(eligible.includes(selected) ? selected : eligible.includes(mine) ? mine : eligible[0]);
+  }
+  function paintCloud() {
+    renderMemberChoices();renderHome();
+    renderHistory();renderData();
+    const mine=members.find(member=>member.user_id===currentUser?.id);
+    document.getElementById('cloud-account-name').textContent=mine ? mine.name+' としてログイン中' : 'ログイン中';
+    document.getElementById('more-members').hidden=memberNames().length<=3;
+  }
+  async function syncCloud(force=false) {
+    if (!currentUser || recoveryMode || mutationBusy) return false;
+    if (syncTask) return syncTask;
+    if (!force && Date.now()-lastSync<15000) return true;
+    const epoch=sessionEpoch;
+    const task=(async()=>{
+      try {
+        const membership=await cloud.rpc('ika_membership_status');
+        if (membership.error) throw membership.error;
+        if(epoch!==sessionEpoch)return false;
+        if(membership.data!=='approved') {
+          cloudRecords=null;members=[];paintCloud();
+          lockScreen(membership.data==='inactive'?'参加が停止されています。管理者に確認してください。':'表示名を入力して参加してください。',membership.data==='inactive'?'blocked':'join');
+          return false;
+        }
+        const roster=await cloud.rpc('ika_list_members');
+        if(roster.error)throw roster.error;
+        if(!Array.isArray(roster.data)||!roster.data.every(m=>typeof m.user_id==='string'&&typeof m.name==='string'&&typeof m.active==='boolean'))throw Error('Invalid members');
+        const loaded=[];
+        for(let offset=0;;offset+=500){
+          const response=await cloud.from('ika_catches').select('id,date,angler,species,count,created_by,version,created_at').order('created_at',{ascending:true}).order('id',{ascending:true}).range(offset,offset+499);
+          if(response.error)throw response.error;
+          if(!Array.isArray(response.data)||!response.data.every(validRecord))throw Error('Invalid records');
+          loaded.push(...response.data);
+          if(response.data.length<500)break;
+        }
+        if(epoch!==sessionEpoch)return false;
+        members=roster.data;cloudRecords=[...new Map(loaded.map(record=>[record.id,record])).values()];
+        lastSync=Date.now();banner.hidden=true;paintCloud();unlockScreen();
+        return true;
+      } catch(error) {
+        if(epoch!==sessionEpoch)return false;
+        const message='共有データを更新できませんでした。通信状態を確認して再読み込みしてください。';
+        if(cloudRecords===null)lockScreen(message,'blocked');
+        else{banner.textContent=message+' 現在は前回読み込んだ内容です。';banner.hidden=false;}
+        return false;
+      }
+    })();
+    syncTask=task;
+    try{return await task;}finally{if(syncTask===task)syncTask=null;}
+  }
+  async function handleSession(session,event) {
+    if(event==='PASSWORD_RECOVERY')recoveryMode=true;
+    const user=session?.user || null;
+    if(user?.id!==currentUser?.id){
+      sessionEpoch++;syncTask=null;cloudRecords=null;members=[];lastSync=0;pendingInsert=null;
+      currentUser=user;resetEditor();current=0;
+      homeHeader.hidden=false;homeMain.hidden=false;registration.hidden=true;history.hidden=true;dataScreen.hidden=true;
+      nav.forEach((button,index)=>{button.classList.toggle('active',index===0);if(index===0)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
+      paintCloud();
+    }
+    currentUser=user;
+    if(!user){recoveryMode=false;lockScreen(authLinkError?'メールのリンクが無効か期限切れです。確認メールを再送するか、もう一度ログインしてください。':'');return;}
+    if(recoveryMode){lockScreen('新しいパスワードを設定してください。','recovery');return;}
+    if(!user.email_confirmed_at){lockScreen('メール確認を済ませてください。','blocked');return;}
+    authName.value=typeof user.user_metadata?.display_name==='string'?user.user_metadata.display_name.slice(0,20):'';
+    await syncCloud(true);
+  }
+  function setAuthBusy(value) {
+    authBusy=value;
+    authScreen.querySelectorAll('button').forEach(button=>{button.disabled=value;});
+  }
+  document.getElementById('auth-login-tab').addEventListener('click',()=>{authModeSet('login');authMessage.textContent='';});
+  document.getElementById('auth-signup-tab').addEventListener('click',()=>{authModeSet('signup');authMessage.textContent='';});
+  document.getElementById('auth-forgot').addEventListener('click',()=>{authModeSet('forgot');authMessage.textContent='';});
+  authForm.addEventListener('submit',async event=>{
+    event.preventDefault();
+    if(authBusy||!cloud||!authForm.reportValidity())return;
+    setAuthBusy(true);authMessage.textContent='処理中…';
+    try {
+      const email=authEmail.value.trim();let result;
+      if(authMode==='signup'){
+        if(!authName.value.trim())throw Error('Name required');
+        result=await cloud.auth.signUp({email,password:authPassword.value,options:{emailRedirectTo:SITE_URL,data:{display_name:authName.value.trim()}}});
+        if(result.error)throw result.error;
+        authPassword.value='';
+        authMessage.textContent='確認メールを送信しました。メール内のリンクを開いてください。届かない場合は迷惑メールも確認してください。';
+        if(result.data?.session)await handleSession(result.data.session,'SIGNED_IN');
+      }else if(authMode==='login'){
+        result=await cloud.auth.signInWithPassword({email,password:authPassword.value});
+        if(result.error)throw result.error;
+        authPassword.value='';await handleSession(result.data.session,'SIGNED_IN');
+      }else if(authMode==='forgot'){
+        result=await cloud.auth.resetPasswordForEmail(email,{redirectTo:SITE_URL});
+        if(result.error)throw result.error;
+        authMessage.textContent='登録済みの場合、再設定メールが届きます。メールのリンクを開いてください。';
+      }else if(authMode==='join'){
+        result=await cloud.rpc('ika_request_join',{display_name:authName.value.trim()});
+        if(result.error)throw result.error;
+        await syncCloud(true);
+      }else if(authMode==='recovery'){
+        result=await cloud.auth.updateUser({password:authPassword.value});
+        if(result.error)throw result.error;
+        recoveryMode=false;authPassword.value='';await syncCloud(true);
+      }
+    }catch(error){authMessage.textContent=readableError(error);}
+    finally{setAuthBusy(false);}
+  });
+  document.getElementById('auth-resend').addEventListener('click',async()=>{
+    if(authBusy||!cloud||!authEmail.reportValidity())return;
+    setAuthBusy(true);
+    try{const result=await cloud.auth.resend({type:'signup',email:authEmail.value.trim(),options:{emailRedirectTo:SITE_URL}});if(result.error)throw result.error;authMessage.textContent='確認メールを再送しました。';}
+    catch(error){authMessage.textContent=readableError(error);}finally{setAuthBusy(false);}
+  });
+  async function logout() {
+    if(mutationBusy||authBusy||!cloud)return;
+    setAuthBusy(true);
+    try{const result=await cloud.auth.signOut({scope:'local'});if(result.error)throw result.error;await handleSession(null,'SIGNED_OUT');}
+    catch(error){if(authScreen.hidden){banner.textContent='ログアウトできませんでした。もう一度お試しください。';banner.hidden=false;}else authMessage.textContent=readableError(error);}
+    finally{setAuthBusy(false);}
+  }
+  document.getElementById('auth-exit').addEventListener('click',logout);
+  document.getElementById('cloud-logout').addEventListener('click',logout);
+  document.getElementById('auth-retry').addEventListener('click',()=>syncCloud(true));
+  document.getElementById('cloud-refresh').addEventListener('click',()=>syncCloud(true));
+  document.getElementById('more-members').addEventListener('click',()=>showPage(3));
+  document.getElementById('local-export').addEventListener('click',()=>{
+    try{
+      const raw=localStorage.getItem(key);
+      if(!raw){document.getElementById('cloud-account-status').textContent='このブラウザに以前の記録はありません。';return;}
+      const link=document.createElement('a'),url=URL.createObjectURL(new Blob([raw],{type:'application/json'}));
+      link.href=url;link.download='ika-battle-local-backup.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      document.getElementById('cloud-account-status').textContent='以前の記録を書き出しました。元の記録も残しています。';
+    }catch{document.getElementById('cloud-account-status').textContent='書き出せませんでした。ブラウザの保存設定を確認してください。';}
+  });
+  function conflict(){return {code:'CONFLICT'};}
+  async function saveCloudRecord(record,original) {
+    if(!currentUser)throw conflict();
+    const fields={date:record.date,angler:record.angler,species:record.species,count:record.count};
+    let result;
+    if(original){
+      if(!owns(original))throw conflict();
+      result=await cloud.from('ika_catches').update(fields).eq('id',original.id).eq('version',original.version).eq('created_by',currentUser.id).select('id');
+    }else{
+      result=await cloud.from('ika_catches').insert({id:record.id,...fields}).select('id');
+      if(result.error?.code==='23505'){
+        const existing=await cloud.from('ika_catches').select('id,date,angler,species,count,created_by').eq('id',record.id).eq('created_by',currentUser.id);
+        if(!existing.error && existing.data?.length===1 && matches(existing.data[0],record))return;
+      }
+    }
+    if(result.error)throw result.error;
+    if(!result.data?.length)throw conflict();
+  }
+  async function deleteCloudRecord(record) {
+    if(!owns(record))throw conflict();
+    const result=await cloud.from('ika_catches').delete().eq('id',record.id).eq('version',record.version).eq('created_by',currentUser.id).select('id');
+    if(result.error)throw result.error;
+    if(!result.data?.length)throw conflict();
+  }
+  function startupCloud() {
+    if(!window.supabase || !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(CLOUD_URL)){
+      lockScreen('接続の準備ができていません。通信状態または接続設定を確認してください。','blocked');
+      document.getElementById('auth-retry').onclick=()=>location.reload();return;
+    }
+    // 復旧リンクでは通常の画面を開く前にパスワード設定を表示する。
+    recoveryMode=new URLSearchParams(location.hash.slice(1)).get('type')==='recovery';
+    authLinkError=new URLSearchParams(location.hash.slice(1)).has('error');
+    cloud=window.supabase.createClient(CLOUD_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    cloud.auth.onAuthStateChange((event,session)=>{
+      if(event==='PASSWORD_RECOVERY')recoveryMode=true;
+      if(['INITIAL_SESSION','SIGNED_IN','SIGNED_OUT','PASSWORD_RECOVERY'].includes(event))setTimeout(()=>{handleSession(session,event).catch(()=>lockScreen('接続できませんでした。再読み込みしてください。','blocked'));},0);
+    });
+    if(authLinkError)authMessage.textContent='メールのリンクが無効か期限切れです。確認メールを再送するか、もう一度ログインしてください。';
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!mutationBusy)syncCloud();});
+    window.addEventListener('online',()=>syncCloud(true));
+    setInterval(()=>{if(!document.hidden&&!mutationBusy&&!editingRecord)syncCloud();},60000);
+  }
+
   function validRecord(record) {
     return record && typeof record.id === 'string' &&
       typeof record.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(record.date) &&
       Number.isFinite(Date.parse(record.date)) &&
       new Date(record.date).toISOString().slice(0,10) === record.date &&
-      ['ひろき','ゆうま','まさき'].includes(record.angler) &&
+      typeof record.angler === 'string' && record.angler.trim().length > 0 && [...record.angler].length <= 20 &&
       ['アオリイカ','コウイカ','タコ'].includes(record.species) &&
-      Number.isSafeInteger(record.count) && record.count >= 1;
+      Number.isSafeInteger(record.count) && record.count >= 1 && record.count <= 2147483647;
   }
   function readRecords() {
-    const raw = localStorage.getItem(key);
-    const records = raw === null ? [] : JSON.parse(raw);
-    if (!Array.isArray(records) || !records.every(validRecord)) throw new Error('Invalid records');
-    return records;
+    if(cloudRecords === null) throw Error('Shared records unavailable');
+    return cloudRecords;
   }
   function renderHome() {
-    const names = ['ひろき','ゆうま','まさき'];
+    const names = memberNames();
     let records;
     try { records = readRecords(); } catch { records = null; }
     const now = new Date();
@@ -1348,7 +1666,7 @@ main{
     const monthly = scores(month+'-',false);
     const tako = scores(year+'-',true);
     function leader(data,nameId,scoreId,unit) {
-      const best = Math.max(...data.map(person=>person.score));
+      const best = Math.max(0,...data.map(person=>person.score));
       const winners = data.filter(person=>person.score === best);
       const name = document.getElementById(nameId);
       name.textContent = !records ? '読込エラー' : best === 0 ? '記録なし' :
@@ -1362,7 +1680,7 @@ main{
     function ranking(id,data,prefix,unit) {
       const container = document.getElementById(id);
       container.replaceChildren();
-      for (const person of data) {
+      for (const person of data.slice(0,3)) {
         const item = document.createElement('div');
         item.className = prefix + '-person';
         const name = document.createElement('span');
@@ -1376,7 +1694,7 @@ main{
       }
     }
     ranking('annualRanking',annual.slice().sort((a,b)=>b.score-a.score),'annual','杯');
-    ranking('takoRanking',tako,'tako','匹');
+    ranking('takoRanking',tako.length>3 ? tako.slice().sort((a,b)=>b.score-a.score) : tako,'tako','匹');
     const recent = document.querySelector('.recent');
     recent.querySelectorAll('.catch-row,.recent-status').forEach(row=>row.remove());
     if (!records || records.length === 0) {
@@ -1439,7 +1757,7 @@ main{
     const prefix = selectedYear + '-' + (dataMonth.value ? dataMonth.value + '-' : '');
     const selected = (records || []).filter(record=>record.date.startsWith(prefix));
     const species = ['アオリイカ','コウイカ','タコ'];
-    const people = ['ひろき','ゆうま','まさき'].map(name=>({name,totals:species.map(type=>selected.filter(record=>record.angler === name && record.species === type).reduce((sum,record)=>sum+record.count,0))}));
+    const people = memberNames().map(name=>({name,totals:species.map(type=>selected.filter(record=>record.angler === name && record.species === type).reduce((sum,record)=>sum+record.count,0))}));
     ['data-aori','data-kouika','data-tako'].forEach((id,index)=>{
       const element = document.getElementById(id);
       element.replaceChildren(document.createTextNode(records ? String(people.reduce((sum,person)=>sum+person.totals[index],0)) : '—'));
@@ -1508,7 +1826,7 @@ main{
         remove.textContent = '削除';
         remove.addEventListener('click',()=>deleteRecord(record));
         actions.append(edit,remove);
-        item.append(actions);
+        if(owns(record)) item.append(actions);
         list.append(item);
       }
     } catch {
@@ -1530,9 +1848,11 @@ main{
     document.getElementById('entry-back').setAttribute('aria-label','ホームに戻る');
   }
   function startEdit(record) {
+    if(!owns(record)||mutationBusy)return;
     editingRecord = {...record};
     date.value = record.date;
-    form.elements.angler.value = record.angler;
+    renderMemberChoices();
+    chooseAngler(record.angler);
     form.elements.species.value = record.species;
     count = record.count;
     updateCount(0);
@@ -1546,29 +1866,23 @@ main{
   function matches(a,b) {
     return a && b && ['id','date','angler','species','count'].every(field=>a[field] === b[field]);
   }
-  function deleteRecord(record) {
-    const summary = record.date.replaceAll('-','/') + ' ' + record.angler + '\n' + record.species + ' ' + record.count + (record.species === 'タコ' ? '匹' : '杯');
-    if (!window.confirm(summary + '\n\nこの記録を削除しますか？削除すると元に戻せません。')) return;
-    try {
-      const records = readRecords();
-      const index = records.findIndex(item=>item.id === record.id);
-      if (index < 0 || !matches(records[index],record)) {
-        renderHistory();
-        status.textContent = 'この記録は変更または削除されています。最新の内容を確認してください。';
-        return;
-      }
-      records.splice(index,1);
-      localStorage.setItem(key,JSON.stringify(records));
-      renderHome();
-      renderHistory();
-      status.textContent = '削除しました。 ' + status.textContent;
+  async function deleteRecord(record) {
+    if(!owns(record)||mutationBusy)return;
+    const summary=record.date.replaceAll('-','/')+' '+record.angler+'\n'+record.species+' '+record.count+(record.species==='タコ'?'匹':'杯');
+    if(!window.confirm(summary+'\n\nこの記録を削除しますか？削除すると元に戻せません。'))return;
+    mutationBusy=true;const operationEpoch=++sessionEpoch;syncTask=null;
+    try{
+      await deleteCloudRecord(record);
+      if(operationEpoch!==sessionEpoch)return;
+      cloudRecords=cloudRecords.filter(item=>item.id!==record.id);
+      paintCloud();status.textContent='削除しました。 '+status.textContent;
       document.getElementById('history-title').focus({preventScroll:true});
-    } catch {
-      status.textContent = '削除できませんでした。記録は変更していません。ブラウザの保存設定を確認してください。';
-    }
+    }catch(error){status.textContent=readableError(error);}
+    finally{mutationBusy=false;}
   }
   nav[0].setAttribute('aria-current','page');
   function showPage(next) {
+    if(mutationBusy||!authScreen.hidden)return;
     if (next !== 1 && editingRecord) resetEditor();
     if (current === 0 && next !== 0) homeScroll = window.scrollY;
     homeHeader.hidden = next !== 0;
@@ -1582,6 +1896,7 @@ main{
       else button.removeAttribute('aria-current');
     });
     current = next;
+    if(next===1)renderMemberChoices();
     if (next === 0) renderHome();
     if (next === 2) renderHistory();
     if (next === 3) renderData();
@@ -1591,7 +1906,7 @@ main{
   document.querySelector('.register-button').addEventListener('click',()=>showPage(1));
   document.querySelector('.view-all').addEventListener('click',()=>showPage(2));
   nav[0].addEventListener('click',()=>showPage(0));
-  nav[1].addEventListener('click',()=>{if (editingRecord) resetEditor();showPage(1);});
+  nav[1].addEventListener('click',()=>{if(mutationBusy)return;if (editingRecord) resetEditor();showPage(1);});
   nav[2].addEventListener('click',()=>showPage(2));
   nav[3].addEventListener('click',()=>showPage(3));
   document.getElementById('entry-back').addEventListener('click',()=>{
@@ -1611,7 +1926,8 @@ main{
     feedback.textContent = '';
   }
   function updateCount(delta) {
-    count = Math.min(Number.MAX_SAFE_INTEGER,Math.max(1,count + delta));
+    if(mutationBusy)return;
+    count = Math.min(2147483647,Math.max(1,count + delta));
     document.getElementById('catch-count').textContent = count;
     minus.disabled = count === 1;
     clearFeedback();
@@ -1628,61 +1944,47 @@ main{
     clearFeedback();
     document.getElementById('catch-unit').textContent = form.elements.species.value === 'タコ' ? '匹' : '杯';
   });
-  form.addEventListener('submit',event=>{
+  form.addEventListener('submit',async event=>{
     event.preventDefault();
-    if (submitted || !form.reportValidity()) return;
+    if (submitted || mutationBusy || !currentUser || !form.reportValidity()) return;
     const record = {
       id: editingRecord ? editingRecord.id : (typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)),
-      date:date.value, angler:form.elements.angler.value,
+      date:date.value, angler:currentAngler(),
       species:form.elements.species.value, count
     };
     if (!validRecord(record)) {
       feedback.textContent = '日付と入力内容を確認してください。';
       return;
     }
+    const signature=JSON.stringify([record.date,record.angler,record.species,record.count]);
+    if(!editingRecord){
+      if(pendingInsert?.signature===signature)record.id=pendingInsert.id;
+      else pendingInsert={signature,id:record.id};
+    }
+    const original=editingRecord ? {...editingRecord} : null;
+    mutationBusy=true;const operationEpoch=++sessionEpoch;syncTask=null;submit.disabled=true;
+    form.querySelectorAll('input,button').forEach(element=>{element.disabled=true;});
+    feedback.textContent='保存中…';
     try {
-      const records = readRecords();
-      if (editingRecord) {
-        const index = records.findIndex(item=>item.id === editingRecord.id);
-        if (index < 0 || !matches(records[index],editingRecord)) {
-          feedback.textContent = 'この記録は変更または削除されています。履歴に戻って最新の内容を確認してください。';
-          return;
-        }
-        records[index] = {...records[index],...record};
-      } else {
-        records.push(record);
-      }
-      localStorage.setItem(key,JSON.stringify(records));
-      if (editingRecord) {
-        showPage(2);
-        renderHome();
-        status.textContent = '変更を保存しました。 ' + status.textContent;
-        return;
-      }
-      submitted = true;
-      submit.disabled = true;
-      feedback.textContent = '登録しました！';
-      nextEntry.hidden = false;
-      renderHome();
-    } catch {
-      feedback.textContent = '保存できませんでした。ブラウザの保存設定や空き容量を確認して、もう一度お試しください。';
+      await saveCloudRecord(record,original);
+      if(operationEpoch!==sessionEpoch)return;
+      pendingInsert=null;
+      const saved={...record,created_by:currentUser.id,version:original ? original.version+1 : 1,created_at:original?.created_at || new Date().toISOString()};
+      cloudRecords=original ? cloudRecords.map(item=>item.id===saved.id?saved:item) : [...cloudRecords.filter(item=>item.id!==saved.id),saved];
+      mutationBusy=false;
+      if(original){showPage(2);renderHome();status.textContent='変更を保存しました。 '+status.textContent;}
+      else{submitted=true;feedback.textContent='登録しました！';nextEntry.hidden=false;renderHome();}
+      banner.hidden=true;
+    } catch(error) {
+      feedback.textContent=readableError(error);
+    } finally {
+      mutationBusy=false;
+      form.querySelectorAll('input,button').forEach(element=>{element.disabled=false;});
+      minus.disabled=count===1;submit.disabled=submitted;
     }
   });
-  renderHome();
-  document.addEventListener('visibilitychange',()=>{
-    if (!document.hidden) {
-      renderHome();
-      if (current === 2) renderHistory();
-      if (current === 3) renderData();
-    }
-  });
-  window.addEventListener('storage',event=>{
-    if (event.key === key || event.key === null) {
-      renderHome();
-      if (current === 2) renderHistory();
-      if (current === 3) renderData();
-    }
-  });
+  startupCloud();
+
 })();
 
 
