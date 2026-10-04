@@ -35,6 +35,7 @@ button{
   width:100%;
   max-width:430px;
   min-height:100vh;
+  min-height:100dvh;
   margin:0 auto;
 
   background:
@@ -815,6 +816,7 @@ main{
   .app{
     min-height:
       calc(100vh - 20px);
+    min-height:calc(100dvh - 20px);
   }
 
   .bottom-nav{
@@ -823,7 +825,11 @@ main{
 }
 
 
-/* 釣果登録画面：ホームの既存スタイルには変更を加えない */
+/* Home needs only the menu's own height, without an extra footer spacer. */
+body.home-page .app{min-height:0;padding-bottom:calc(60px + env(safe-area-inset-bottom, 0px));}
+body.home-page main{padding-bottom:0;}
+
+/* 釣果登録画面 */
 #catch-registration[hidden]{display:none;}
 #catch-registration{padding:16px 20px 18px;}
 #catch-registration .entry-back{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-bottom:8px;padding:8px 14px;border:1px solid #cde8f3;border-radius:999px;background:#eefaff;color:#247ca8;font-size:13px;font-weight:800;cursor:pointer;}
@@ -1508,7 +1514,7 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
     const user=session?.user || null;
     if(user?.id!==currentUser?.id){
       sessionEpoch++;syncTask=null;cloudRecords=null;members=[];lastSync=0;pendingInsert=null;
-      currentUser=user;resetEditor();current=0;
+      currentUser=user;resetEditor();current=0;document.body.classList.add('home-page');
       homeHeader.hidden=false;homeMain.hidden=false;registration.hidden=true;history.hidden=true;dataScreen.hidden=true;
       nav.forEach((button,index)=>{button.classList.toggle('active',index===0);if(index===0)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
       paintCloud();
@@ -1895,6 +1901,7 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
       else button.removeAttribute('aria-current');
     });
     current = next;
+    document.body.classList.toggle('home-page',next === 0);
     if(next===1)renderMemberChoices();
     if (next === 0) renderHome();
     if (next === 2) renderHistory();
