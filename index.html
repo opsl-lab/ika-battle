@@ -46,7 +46,8 @@ button{
       #aee5f5 100%
     );
 
-  padding-bottom:74px;
+  /* Leave enough scroll space to bring the last button above the fixed menu. */
+  padding-bottom:calc(80px + env(safe-area-inset-bottom, 0px));
   overflow:hidden;
 }
 
@@ -638,7 +639,8 @@ main{
   width:100%;
   max-width:430px;
 
-  height:74px;
+  height:calc(60px + env(safe-area-inset-bottom, 0px));
+  padding-bottom:env(safe-area-inset-bottom, 0px);
 
   display:grid;
 
