@@ -692,44 +692,10 @@ main{
 
 /* HOME */
 
-.home-icon::before{
-  content:"";
-
-  position:absolute;
-
-  left:5px;
-  top:9px;
-
-  width:14px;
-  height:12px;
-
-  border:
-    2px solid currentColor;
-
-  border-top:none;
-
-  border-radius:2px;
-}
-
-.home-icon::after{
-  content:"";
-
-  position:absolute;
-
-  left:5px;
-  top:4px;
-
-  width:14px;
-  height:14px;
-
-  border-left:
-    2px solid currentColor;
-
-  border-top:
-    2px solid currentColor;
-
-  transform:
-    rotate(45deg);
+.home-icon svg{
+  display:block;
+  width:24px;
+  height:24px;
 }
 
 
@@ -1202,7 +1168,10 @@ main{
     type="button">
 
     <span
-      class="nav-icon home-icon">
+      class="nav-icon home-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+        <path d="M2 11 L12 2 L22 11 M5 8.3 V22 H19 V8.3"/>
+      </svg>
     </span>
 
     <span>
