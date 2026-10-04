@@ -1883,8 +1883,9 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
   nav[0].setAttribute('aria-current','page');
   function showPage(next) {
     if(mutationBusy||!authScreen.hidden)return;
-    // A completed submission must not lock the next new-entry visit.
-    if (next === 1 && submitted && !editingRecord) resetEditor();
+    // Every new-entry visit starts fresh, including abandoned or changed drafts.
+    // startEdit sets editingRecord before navigation so saved values are retained.
+    if (next === 1 && !editingRecord) resetEditor();
     if (next !== 1 && editingRecord) resetEditor();
     if (current === 0 && next !== 0) homeScroll = window.scrollY;
     homeHeader.hidden = next !== 0;
