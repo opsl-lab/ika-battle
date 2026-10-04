@@ -840,7 +840,7 @@ main{
 #catch-registration .entry-choice input:checked + span{color:#087db6;background:#e2f6ff;border:2px solid #18a6d6;}
 #catch-registration .entry-choice input:focus-visible + span{outline:3px solid #173f58;outline-offset:3px;}
 #catch-registration .entry-counter{display:flex;align-items:center;justify-content:center;gap:22px;}
-#catch-registration .entry-counter button{width:44px;height:44px;border:1px solid #b7e2f1;border-radius:50%;background:#eaf8fe;color:#078bc6;font-size:27px;cursor:pointer;}
+#catch-registration .entry-counter button{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;padding:0;border:1px solid #b7e2f1;border-radius:50%;background:#eaf8fe;color:#078bc6;font-size:27px;line-height:1;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;appearance:none;}
 #catch-registration .entry-counter button:disabled{opacity:.4;cursor:default;}
 #catch-registration .entry-amount{min-width:65px;text-align:center;color:#078bc6;font-size:28px;font-weight:900;}
 #catch-registration .entry-unit{font-size:14px;margin-left:4px;}
@@ -1209,7 +1209,7 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
         <span class="entry-label" id="count-label">数</span>
         <div class="entry-counter" role="group" aria-labelledby="count-label">
           <button id="count-minus" type="button" aria-label="数を減らす" disabled>－</button>
-          <output class="entry-amount" aria-live="polite"><span id="catch-count">1</span><span id="catch-unit" class="entry-unit">杯</span></output>
+          <div class="entry-amount" role="status" aria-live="polite" aria-atomic="true"><span id="catch-count">1</span><span id="catch-unit" class="entry-unit">杯</span></div>
           <button id="count-plus" type="button" aria-label="数を増やす">＋</button>
         </div>
       </div>
