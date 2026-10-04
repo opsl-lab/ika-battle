@@ -855,6 +855,32 @@ main{
   }
 }
 
+
+/* 釣果登録画面：ホームの既存スタイルには変更を加えない */
+#catch-registration[hidden]{display:none;}
+#catch-registration{padding:30px 20px 28px;}
+#catch-registration .entry-kicker{color:#2486ac;font-size:11px;font-weight:800;letter-spacing:.16em;}
+#catch-registration h1{margin:5px 0 8px;font-size:26px;color:#173f58;}
+#catch-registration .entry-intro{font-size:13px;line-height:1.7;color:#527d92;margin-bottom:22px;}
+#catch-registration .entry-card{background:rgba(255,255,255,.96);border:1px solid #e0f1f7;border-radius:22px;padding:22px 18px;box-shadow:0 5px 15px rgba(42,109,143,.10);}
+#catch-registration .entry-field{margin-bottom:24px;min-width:0;border:0;padding:0;}
+#catch-registration .entry-label{display:block;font-size:14px;font-weight:800;margin-bottom:10px;}
+#catch-registration input[type=date]{display:block;width:100%;min-width:0;min-height:50px;border:1px solid #b8dfeF;border-radius:12px;padding:12px;color:#173f58;background:#f5fcff;font:inherit;}
+#catch-registration .entry-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;}
+#catch-registration .entry-choice{position:relative;cursor:pointer;}
+#catch-registration .entry-choice input{position:absolute;opacity:0;width:1px;height:1px;}
+#catch-registration .entry-choice span{display:flex;align-items:center;justify-content:center;min-height:49px;border:1px solid #d3eaf3;border-radius:12px;background:#f5fbfe;font-size:12px;font-weight:800;white-space:nowrap;}
+#catch-registration .entry-choice input:checked + span{color:#087db6;background:#e2f6ff;border:2px solid #18a6d6;}
+#catch-registration .entry-choice input:focus-visible + span{outline:3px solid #173f58;outline-offset:3px;}
+#catch-registration .entry-counter{display:flex;align-items:center;justify-content:center;gap:22px;}
+#catch-registration .entry-counter button{width:50px;height:50px;border:1px solid #b7e2f1;border-radius:50%;background:#eaf8fe;color:#078bc6;font-size:27px;cursor:pointer;}
+#catch-registration .entry-counter button:disabled{opacity:.4;cursor:default;}
+#catch-registration .entry-amount{min-width:65px;text-align:center;color:#078bc6;font-size:32px;font-weight:900;}
+#catch-registration .entry-unit{font-size:14px;margin-left:4px;}
+#catch-registration .entry-submit{width:100%;min-height:58px;border:2px solid white;border-radius:999px;background:linear-gradient(135deg,#19c0e4,#047ac7);color:white;font-size:18px;font-weight:900;box-shadow:0 6px 15px rgba(12,121,180,.25);cursor:pointer;}
+#catch-registration .entry-feedback{min-height:28px;margin-top:15px;text-align:center;color:#087aa3;font-size:15px;font-weight:800;}
+#catch-registration .entry-preview-note{text-align:center;font-size:11px;color:#527d92;line-height:1.7;margin-top:12px;}
+
 </style>
 </head>
 
@@ -1169,6 +1195,46 @@ main{
 
   </main>
 
+  <section id="catch-registration" aria-labelledby="entry-title" hidden>
+    <p class="entry-kicker">IKA BATTLE / CATCH</p>
+    <h1 id="entry-title" tabindex="-1">釣果登録</h1>
+    <p class="entry-intro">今日の釣果を、ひとつずつ。</p>
+    <form id="catch-form" class="entry-card">
+      <div class="entry-field">
+        <label class="entry-label" for="catch-date">日付</label>
+        <input id="catch-date" name="date" type="date" required>
+      </div>
+      <fieldset class="entry-field">
+        <legend class="entry-label">釣った人</legend>
+        <div class="entry-options">
+          <label class="entry-choice"><input type="radio" name="angler" value="ひろき" checked required><span>ひろき</span></label>
+          <label class="entry-choice"><input type="radio" name="angler" value="ゆうま"  required><span>ゆうま</span></label>
+          <label class="entry-choice"><input type="radio" name="angler" value="まさき"  required><span>まさき</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="entry-field">
+        <legend class="entry-label">種類</legend>
+        <div class="entry-options">
+          <label class="entry-choice"><input type="radio" name="species" value="アオリイカ" checked required><span>アオリイカ</span></label>
+          <label class="entry-choice"><input type="radio" name="species" value="コウイカ"  required><span>コウイカ</span></label>
+          <label class="entry-choice"><input type="radio" name="species" value="タコ"  required><span>タコ</span></label>
+        </div>
+      </fieldset>
+      <div class="entry-field">
+        <span class="entry-label" id="count-label">数</span>
+        <div class="entry-counter" role="group" aria-labelledby="count-label">
+          <button id="count-minus" type="button" aria-label="数を減らす" disabled>－</button>
+          <output class="entry-amount" aria-live="polite"><span id="catch-count">1</span><span id="catch-unit" class="entry-unit">杯</span></output>
+          <button id="count-plus" type="button" aria-label="数を増やす">＋</button>
+        </div>
+      </div>
+      <button class="entry-submit" type="submit">登録する</button>
+      <p id="entry-feedback" class="entry-feedback" role="status" aria-live="polite"></p>
+    </form>
+    <p class="entry-preview-note">お試し画面です。入力内容はまだ保存されません。</p>
+  </section>
+
+
 
 </div>
 
@@ -1457,6 +1523,56 @@ battleData
     }
 
   );
+
+
+/* 登録UIのみ。履歴・仮データ・ストレージには書き込まない。 */
+(() => {
+  const homeHeader = document.querySelector('.hero');
+  const homeMain = document.querySelector('main');
+  const screen = document.getElementById('catch-registration');
+  const nav = document.querySelectorAll('.nav-item');
+  const form = document.getElementById('catch-form');
+  const date = document.getElementById('catch-date');
+  const feedback = document.getElementById('entry-feedback');
+  const minus = document.getElementById('count-minus');
+  let count = 1;
+  let homeScroll = 0;
+  const today = new Date();
+  date.value = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  nav[0].setAttribute('aria-current','page');
+  function showRegistration(open) {
+    if (open && screen.hidden) homeScroll = window.scrollY;
+    homeHeader.hidden = open;
+    homeMain.hidden = open;
+    screen.hidden = !open;
+    nav[0].classList.toggle('active', !open);
+    nav[1].classList.toggle('active', open);
+    nav[open ? 0 : 1].removeAttribute('aria-current');
+    nav[open ? 1 : 0].setAttribute('aria-current','page');
+    feedback.textContent = '';
+    window.scrollTo(0,open ? 0 : homeScroll);
+    if (open) document.getElementById('entry-title').focus({preventScroll:true});
+  }
+  document.querySelector('.register-button').addEventListener('click',()=>showRegistration(true));
+  nav[1].addEventListener('click',()=>showRegistration(true));
+  nav[0].addEventListener('click',()=>showRegistration(false));
+  function updateCount(delta) {
+    count = Math.max(1,count + delta);
+    document.getElementById('catch-count').textContent = count;
+    minus.disabled = count === 1;
+    feedback.textContent = '';
+  }
+  minus.addEventListener('click',()=>updateCount(-1));
+  document.getElementById('count-plus').addEventListener('click',()=>updateCount(1));
+  form.addEventListener('input',()=>{feedback.textContent = '';});
+  form.addEventListener('change',()=>{
+    document.getElementById('catch-unit').textContent = form.elements.species.value === 'タコ' ? '匹' : '杯';
+  });
+  form.addEventListener('submit',(event)=>{
+    event.preventDefault();
+    feedback.textContent = '登録しました！';
+  });
+})();
 
 </script>
 
