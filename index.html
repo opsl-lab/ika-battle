@@ -1158,23 +1158,6 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
       </div>
 
 
-      <button
-        class="register-button"
-        type="button">
-
-        <span class="register-plus">
-          ＋
-        </span>
-
-        <span>
-          釣果を登録する
-        </span>
-
-        <span class="register-arrow">
-          〉
-        </span>
-
-      </button>
 
 
       <div class="fish-decoration">
@@ -1920,7 +1903,6 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
     window.scrollTo(0,next === 0 ? homeScroll : 0);
     if (next !== 0) document.getElementById(next === 1 ? 'entry-title' : next === 2 ? 'history-title' : 'data-title').focus({preventScroll:true});
   }
-  document.querySelector('.register-button').addEventListener('click',()=>showPage(1));
   document.querySelector('.view-all').addEventListener('click',()=>showPage(2));
   nav[0].addEventListener('click',()=>showPage(0));
   nav[1].addEventListener('click',()=>{if(mutationBusy)return;if (editingRecord) resetEditor();showPage(1);});
@@ -1929,7 +1911,7 @@ body.cloud-locked .app,body.cloud-locked .bottom-nav{display:none;}
   document.getElementById('entry-back').addEventListener('click',()=>{
     if (editingRecord) {showPage(2);return;}
     showPage(0);
-    document.querySelector('.register-button').focus({preventScroll:true});
+    nav[0].focus({preventScroll:true});
   });
   document.getElementById('history-back').addEventListener('click',()=>{
     showPage(0);
