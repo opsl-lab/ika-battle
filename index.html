@@ -901,6 +901,7 @@ main{
 #catch-history .history-register{width:100%;min-height:48px;border:1px solid #b7e2f1;border-radius:999px;background:#eaf8fe;color:#078bc6;font-size:14px;font-weight:800;margin-top:16px;cursor:pointer;}
 #catch-history .history-note{font-size:11px;line-height:1.7;color:#527d92;margin-top:12px;}
 
+.recent-status{min-height:141px;display:grid;place-items:center;color:#527d92;font-size:12px;text-align:center;}
 </style>
 </head>
 
@@ -1074,95 +1075,6 @@ main{
 
 
 
-      <!-- 1 -->
-
-      <div class="catch-row">
-
-        <div class="catch-date">
-          9/21
-        </div>
-
-        <div class="catch-name">
-          ひろき
-        </div>
-
-        <img
-          class="catch-icon"
-          src="images/aori-icon.png"
-          alt=""
-        >
-
-        <div class="catch-type">
-          アオリイカ
-        </div>
-
-        <div class="catch-score">
-          5<small>杯</small>
-        </div>
-
-      </div>
-
-
-
-      <!-- 2 -->
-
-      <div class="catch-row">
-
-        <div class="catch-date">
-          9/20
-        </div>
-
-        <div class="catch-name">
-          まさき
-        </div>
-
-        <img
-          class="catch-icon"
-          src="images/kouika-icon.png"
-          alt=""
-        >
-
-        <div class="catch-type">
-          コウイカ
-        </div>
-
-        <div class="catch-score">
-          3<small>杯</small>
-        </div>
-
-      </div>
-
-
-
-      <!-- 3 -->
-
-      <div class="catch-row">
-
-        <div class="catch-date">
-          9/18
-        </div>
-
-        <div class="catch-name">
-          ゆうま
-        </div>
-
-        <img
-          class="catch-icon"
-          src="images/aori-icon.png"
-          alt=""
-        >
-
-        <div class="catch-type">
-          アオリイカ
-        </div>
-
-        <div class="catch-score">
-          4<small>杯</small>
-        </div>
-
-      </div>
-
-
     </section>
 
 
@@ -1263,7 +1175,7 @@ main{
     <p id="history-status" class="history-status" role="status"></p>
     <ul id="history-list" class="history-list" aria-label="登録した釣果"></ul>
     <button id="history-register" class="history-register" type="button">＋ 釣果を登録する</button>
-    <p class="history-note">このブラウザで登録した釣果を表示しています。ブラウザのデータを消すと記録も消えます。ホームのランキング・最近の釣果は、まだサンプル表示です。</p>
+    <p class="history-note">このブラウザで登録した釣果を表示しています。ブラウザのデータを消すと記録も消えます。</p>
   </section>
 
 
@@ -1349,216 +1261,7 @@ main{
 
 <script>
 
-/*
-=================================
-  仮データ
-  ↓
-  あとで登録データへ接続する
-=================================
-*/
-
-const battleData = {
-
-  annual: [
-
-    {
-      name:"ひろき",
-      score:42
-    },
-
-    {
-      name:"ゆうま",
-      score:37
-    },
-
-    {
-      name:"まさき",
-      score:31
-    }
-
-  ],
-
-
-  monthlyMvp:{
-
-    name:"まさき",
-    score:18
-
-  },
-
-
-  tako:[
-
-    {
-      name:"ひろき",
-      score:2
-    },
-
-    {
-      name:"ゆうま",
-      score:0
-    },
-
-    {
-      name:"まさき",
-      score:1
-    }
-
-  ]
-
-};
-
-
-
-/* =====================
-   年間王者
-===================== */
-
-const annual =
-  [...battleData.annual]
-  .sort(
-    (a,b) =>
-    b.score - a.score
-  );
-
-
-const winner =
-  annual[0];
-
-
-document
-  .getElementById(
-    "annualWinnerName"
-  )
-  .textContent =
-  winner.name;
-
-
-document
-  .getElementById(
-    "annualWinnerScore"
-  )
-  .textContent =
-  winner.score + "杯";
-
-
-
-/* 年間順位 */
-
-const annualRanking =
-  document.getElementById(
-    "annualRanking"
-  );
-
-
-annual.forEach(
-  person => {
-
-    annualRanking
-      .insertAdjacentHTML(
-
-        "beforeend",
-
-        `
-        <div class="annual-person">
-
-          <span
-            class="annual-person-name">
-
-            ${person.name}
-
-          </span>
-
-          <span
-            class="annual-person-score">
-
-            ${person.score}杯
-
-        </span>
-
-        </div>
-        `
-
-      );
-
-  }
-);
-
-
-
-/* =====================
-   MONTHLY MVP
-===================== */
-
-document
-  .getElementById(
-    "mvpName"
-  )
-  .textContent =
-  battleData
-    .monthlyMvp
-    .name;
-
-
-document
-  .getElementById(
-    "mvpScore"
-  )
-  .textContent =
-  battleData
-    .monthlyMvp
-    .score;
-
-
-
-/* =====================
-   タコ
-===================== */
-
-const takoRanking =
-  document.getElementById(
-    "takoRanking"
-  );
-
-
-battleData
-  .tako
-  .forEach(
-
-    person => {
-
-      takoRanking
-        .insertAdjacentHTML(
-
-          "beforeend",
-
-          `
-          <div class="tako-person">
-
-            <span
-              class="tako-name">
-
-              ${person.name}
-
-            </span>
-
-            <span
-              class="tako-score">
-
-              ${person.score}匹
-
-            </span>
-          </div>
-          `
-
-        );
-
-    }
-
-  );
-
-
-/* 端末内の保存と履歴。ホームの仮データは別管理。 */
+/* 保存した釣果をホームと履歴で共有する。 */
 (() => {
   const key = 'ika-battle.catches.v1';
   const homeHeader = document.querySelector('.hero');
@@ -1595,6 +1298,95 @@ battleData
     if (!Array.isArray(records) || !records.every(validRecord)) throw new Error('Invalid records');
     return records;
   }
+  function renderHome() {
+    const names = ['ひろき','ゆうま','まさき'];
+    let records;
+    try { records = readRecords(); } catch { records = null; }
+    const now = new Date();
+    const year = String(now.getFullYear());
+    const month = year + '-' + String(now.getMonth()+1).padStart(2,'0');
+    const scores = (prefix,tako) => names.map(name=>({
+      name,
+      score:(records || []).filter(record=>record.angler === name &&
+        record.date.startsWith(prefix) && (record.species === 'タコ') === tako)
+        .reduce((sum,record)=>sum + record.count,0)
+    }));
+    const annual = scores(year+'-',false);
+    const monthly = scores(month+'-',false);
+    const tako = scores(year+'-',true);
+    function leader(data,nameId,scoreId,unit) {
+      const best = Math.max(...data.map(person=>person.score));
+      const winners = data.filter(person=>person.score === best);
+      const name = document.getElementById(nameId);
+      name.textContent = !records ? '読込エラー' : best === 0 ? '記録なし' :
+        winners.length === 1 ? winners[0].name : '同率' + winners.length + '人';
+      name.title = records && best > 0 ? winners.map(person=>person.name).join('・') : '';
+      name.setAttribute('aria-label',name.title || name.textContent);
+      document.getElementById(scoreId).textContent = records ? best + unit : '—';
+    }
+    leader(annual,'annualWinnerName','annualWinnerScore','杯');
+    leader(monthly,'mvpName','mvpScore','');
+    function ranking(id,data,prefix,unit) {
+      const container = document.getElementById(id);
+      container.replaceChildren();
+      for (const person of data) {
+        const item = document.createElement('div');
+        item.className = prefix + '-person';
+        const name = document.createElement('span');
+        name.className = prefix === 'annual' ? 'annual-person-name' : 'tako-name';
+        name.textContent = person.name;
+        const score = document.createElement('span');
+        score.className = prefix === 'annual' ? 'annual-person-score' : 'tako-score';
+        score.textContent = records ? person.score + unit : '—';
+        item.append(name,score);
+        container.append(item);
+      }
+    }
+    ranking('annualRanking',annual.slice().sort((a,b)=>b.score-a.score),'annual','杯');
+    ranking('takoRanking',tako,'tako','匹');
+    const recent = document.querySelector('.recent');
+    recent.querySelectorAll('.catch-row,.recent-status').forEach(row=>row.remove());
+    if (!records || records.length === 0) {
+      const message = document.createElement('p');
+      message.className = 'recent-status';
+      message.textContent = records ? 'まだ釣果の記録がありません。' : '記録を読み込めませんでした。';
+      recent.append(message);
+      return;
+    }
+    const latest = records.slice().reverse().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
+    const icons = {'アオリイカ':'aori-icon.png','コウイカ':'kouika-icon.png','タコ':'tako-icon.png'};
+    for (const record of latest) {
+      const row = document.createElement('div');
+      row.className = 'catch-row';
+      const date = document.createElement('div');
+      date.className = 'catch-date';
+      const parts = record.date.split('-');
+      date.textContent = Number(parts[1]) + '/' + Number(parts[2]);
+      date.title = record.date;
+      date.setAttribute('aria-label',record.date);
+      const name = document.createElement('div');
+      name.className = 'catch-name';
+      name.textContent = record.angler;
+      const icon = document.createElement('img');
+      icon.className = 'catch-icon';
+      icon.alt = '';
+      // 未提供のアイコンでも行のサイズを保ち、破損画像マークを出さない。
+      icon.addEventListener('error',()=>{icon.style.visibility='hidden';},{once:true});
+      icon.src = 'images/' + icons[record.species];
+      const species = document.createElement('div');
+      species.className = 'catch-type';
+      species.textContent = record.species;
+      const amount = document.createElement('div');
+      amount.className = 'catch-score';
+      amount.textContent = record.count;
+      const unit = document.createElement('small');
+      unit.textContent = record.species === 'タコ' ? '匹' : '杯';
+      amount.append(unit);
+      row.append(date,name,icon,species,amount);
+      recent.append(row);
+    }
+  }
+
   function renderHistory() {
     list.replaceChildren();
     try {
@@ -1637,6 +1429,7 @@ battleData
       else button.removeAttribute('aria-current');
     });
     current = next;
+    if (next === 0) renderHome();
     if (next === 2) renderHistory();
     window.scrollTo(0,next === 0 ? homeScroll : 0);
     if (next !== 0) document.getElementById(next === 1 ? 'entry-title' : 'history-title').focus({preventScroll:true});
@@ -1699,12 +1492,23 @@ battleData
       submit.disabled = true;
       feedback.textContent = '登録しました！';
       nextEntry.hidden = false;
+      renderHome();
     } catch {
       feedback.textContent = '保存できませんでした。ブラウザの保存設定や空き容量を確認して、もう一度お試しください。';
     }
   });
+  renderHome();
+  document.addEventListener('visibilitychange',()=>{
+    if (!document.hidden) {
+      renderHome();
+      if (current === 2) renderHistory();
+    }
+  });
   window.addEventListener('storage',event=>{
-    if ((event.key === key || event.key === null) && current === 2) renderHistory();
+    if (event.key === key || event.key === null) {
+      renderHome();
+      if (current === 2) renderHistory();
+    }
   });
 })();
 
