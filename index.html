@@ -902,6 +902,11 @@ main{
 #catch-history .history-note{font-size:11px;line-height:1.7;color:#527d92;margin-top:12px;}
 
 .recent-status{min-height:141px;display:grid;place-items:center;color:#527d92;font-size:12px;text-align:center;}
+
+#catch-history .history-record{flex-wrap:wrap;}
+#catch-history .history-actions{display:flex;justify-content:flex-end;gap:8px;width:100%;border-top:1px solid #e3f0f5;padding-top:10px;}
+#catch-history .history-actions button{min-height:44px;padding:8px 16px;border:1px solid #cde8f3;border-radius:999px;background:#eefaff;color:#247ca8;font-size:12px;font-weight:800;cursor:pointer;}
+#catch-history .history-actions .history-delete{background:#fff5f5;border-color:#f0d7d7;color:#b34c52;}
 </style>
 </head>
 
@@ -1277,6 +1282,7 @@ main{
   const nextEntry = document.getElementById('entry-next');
   const list = document.getElementById('history-list');
   const status = document.getElementById('history-status');
+  let editingRecord = null;
   let count = 1;
   let homeScroll = 0;
   let current = 0;
@@ -1410,14 +1416,80 @@ main{
         amount.className = 'history-amount';
         amount.textContent = record.count + (record.species === 'タコ' ? '匹' : '杯');
         item.append(details,amount);
+        const actions = document.createElement('div');
+        actions.className = 'history-actions';
+        const edit = document.createElement('button');
+        edit.type = 'button';
+        edit.textContent = '編集';
+        edit.addEventListener('click',()=>startEdit(record));
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'history-delete';
+        remove.textContent = '削除';
+        remove.addEventListener('click',()=>deleteRecord(record));
+        actions.append(edit,remove);
+        item.append(actions);
         list.append(item);
       }
     } catch {
       status.textContent = '記録を読み込めませんでした。ブラウザの保存設定を確認してください。保存済みの内容は変更していません。';
     }
   }
+
+  function resetEditor() {
+    editingRecord = null;
+    form.reset();
+    const now = new Date();
+    date.value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+    count = 1;
+    updateCount(0);
+    document.getElementById('catch-unit').textContent = '杯';
+    document.getElementById('entry-title').textContent = '釣果登録';
+    registration.querySelector('.entry-intro').textContent = '今日の釣果を、ひとつずつ。';
+    submit.textContent = '登録する';
+    document.getElementById('entry-back').setAttribute('aria-label','ホームに戻る');
+  }
+  function startEdit(record) {
+    editingRecord = {...record};
+    date.value = record.date;
+    form.elements.angler.value = record.angler;
+    form.elements.species.value = record.species;
+    count = record.count;
+    updateCount(0);
+    document.getElementById('catch-unit').textContent = record.species === 'タコ' ? '匹' : '杯';
+    document.getElementById('entry-title').textContent = '釣果を編集';
+    registration.querySelector('.entry-intro').textContent = '記録を直して、変更を保存。';
+    submit.textContent = '変更を保存する';
+    document.getElementById('entry-back').setAttribute('aria-label','編集をやめて履歴に戻る');
+    showPage(1);
+  }
+  function matches(a,b) {
+    return a && b && ['id','date','angler','species','count'].every(field=>a[field] === b[field]);
+  }
+  function deleteRecord(record) {
+    const summary = record.date.replaceAll('-','/') + ' ' + record.angler + '\n' + record.species + ' ' + record.count + (record.species === 'タコ' ? '匹' : '杯');
+    if (!window.confirm(summary + '\n\nこの記録を削除しますか？削除すると元に戻せません。')) return;
+    try {
+      const records = readRecords();
+      const index = records.findIndex(item=>item.id === record.id);
+      if (index < 0 || !matches(records[index],record)) {
+        renderHistory();
+        status.textContent = 'この記録は変更または削除されています。最新の内容を確認してください。';
+        return;
+      }
+      records.splice(index,1);
+      localStorage.setItem(key,JSON.stringify(records));
+      renderHome();
+      renderHistory();
+      status.textContent = '削除しました。 ' + status.textContent;
+      document.getElementById('history-title').focus({preventScroll:true});
+    } catch {
+      status.textContent = '削除できませんでした。記録は変更していません。ブラウザの保存設定を確認してください。';
+    }
+  }
   nav[0].setAttribute('aria-current','page');
   function showPage(next) {
+    if (next !== 1 && editingRecord) resetEditor();
     if (current === 0 && next !== 0) homeScroll = window.scrollY;
     homeHeader.hidden = next !== 0;
     homeMain.hidden = next !== 0;
@@ -1437,9 +1509,10 @@ main{
   document.querySelector('.register-button').addEventListener('click',()=>showPage(1));
   document.querySelector('.view-all').addEventListener('click',()=>showPage(2));
   nav[0].addEventListener('click',()=>showPage(0));
-  nav[1].addEventListener('click',()=>showPage(1));
+  nav[1].addEventListener('click',()=>{if (editingRecord) resetEditor();showPage(1);});
   nav[2].addEventListener('click',()=>showPage(2));
   document.getElementById('entry-back').addEventListener('click',()=>{
+    if (editingRecord) {showPage(2);return;}
     showPage(0);
     document.querySelector('.register-button').focus({preventScroll:true});
   });
@@ -1476,7 +1549,7 @@ main{
     event.preventDefault();
     if (submitted || !form.reportValidity()) return;
     const record = {
-      id: typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2),
+      id: editingRecord ? editingRecord.id : (typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)),
       date:date.value, angler:form.elements.angler.value,
       species:form.elements.species.value, count
     };
@@ -1486,8 +1559,23 @@ main{
     }
     try {
       const records = readRecords();
-      records.push(record);
+      if (editingRecord) {
+        const index = records.findIndex(item=>item.id === editingRecord.id);
+        if (index < 0 || !matches(records[index],editingRecord)) {
+          feedback.textContent = 'この記録は変更または削除されています。履歴に戻って最新の内容を確認してください。';
+          return;
+        }
+        records[index] = {...records[index],...record};
+      } else {
+        records.push(record);
+      }
       localStorage.setItem(key,JSON.stringify(records));
+      if (editingRecord) {
+        showPage(2);
+        renderHome();
+        status.textContent = '変更を保存しました。 ' + status.textContent;
+        return;
+      }
       submitted = true;
       submit.disabled = true;
       feedback.textContent = '登録しました！';
