@@ -882,6 +882,25 @@ main{
 #catch-registration .entry-feedback{min-height:22px;margin-top:8px;text-align:center;color:#087aa3;font-size:15px;font-weight:800;}
 #catch-registration .entry-preview-note{text-align:center;font-size:11px;color:#527d92;line-height:1.7;margin-top:8px;}
 
+
+#catch-registration .entry-submit:disabled{opacity:.65;cursor:default;}
+#catch-registration .entry-next{display:block;margin:8px auto 0;min-height:44px;padding:8px 16px;border:1px solid #b7e2f1;border-radius:999px;background:#eaf8fe;color:#078bc6;font-size:13px;font-weight:800;cursor:pointer;}
+#catch-registration .entry-next[hidden]{display:none;}
+#catch-history[hidden]{display:none;}
+#catch-history{padding:16px 20px 18px;}
+#catch-history .history-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:8px;padding:8px 14px;border:1px solid #cde8f3;border-radius:999px;background:#eefaff;color:#247ca8;font-size:13px;font-weight:800;cursor:pointer;}
+#catch-history .history-kicker{color:#2486ac;font-size:11px;font-weight:800;letter-spacing:.16em;}
+#catch-history h1{margin:4px 0 10px;font-size:24px;}
+#catch-history .history-status{font-size:12px;line-height:1.7;color:#527d92;margin-bottom:14px;}
+#catch-history .history-list{list-style:none;padding:0;margin:0;display:grid;gap:10px;}
+#catch-history .history-record{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:rgba(255,255,255,.96);border:1px solid #e0f1f7;border-radius:18px;box-shadow:0 5px 15px rgba(42,109,143,.08);}
+#catch-history time{font-size:11px;color:#527d92;}
+#catch-history .history-person{font-size:16px;font-weight:800;margin:6px 0 4px;}
+#catch-history .history-species{font-size:12px;color:#527d92;}
+#catch-history .history-amount{font-size:24px;font-weight:900;color:#078bc6;overflow-wrap:anywhere;min-width:0;}
+#catch-history .history-register{width:100%;min-height:48px;border:1px solid #b7e2f1;border-radius:999px;background:#eaf8fe;color:#078bc6;font-size:14px;font-weight:800;margin-top:16px;cursor:pointer;}
+#catch-history .history-note{font-size:11px;line-height:1.7;color:#527d92;margin-top:12px;}
+
 </style>
 </head>
 
@@ -1232,9 +1251,21 @@ main{
       </div>
       <button class="entry-submit" type="submit">登録する</button>
       <p id="entry-feedback" class="entry-feedback" role="status" aria-live="polite"></p>
+      <button id="entry-next" class="entry-next" type="button" hidden>続けて登録する</button>
     </form>
-    <p class="entry-preview-note">お試し画面です。入力内容はまだ保存されません。</p>
+    <p class="entry-preview-note">このブラウザに保存されます。3人での共有はまだできません。</p>
   </section>
+
+  <section id="catch-history" aria-labelledby="history-title" hidden>
+    <button id="history-back" class="history-back" type="button" aria-label="ホームに戻る">← 戻る</button>
+    <p class="history-kicker">IKA BATTLE / HISTORY</p>
+    <h1 id="history-title" tabindex="-1">釣果履歴</h1>
+    <p id="history-status" class="history-status" role="status"></p>
+    <ul id="history-list" class="history-list" aria-label="登録した釣果"></ul>
+    <button id="history-register" class="history-register" type="button">＋ 釣果を登録する</button>
+    <p class="history-note">このブラウザで登録した釣果を表示しています。ブラウザのデータを消すと記録も消えます。ホームのランキング・最近の釣果は、まだサンプル表示です。</p>
+  </section>
+
 
 
 
@@ -1527,58 +1558,156 @@ battleData
   );
 
 
-/* 登録UIのみ。履歴・仮データ・ストレージには書き込まない。 */
+/* 端末内の保存と履歴。ホームの仮データは別管理。 */
 (() => {
+  const key = 'ika-battle.catches.v1';
   const homeHeader = document.querySelector('.hero');
   const homeMain = document.querySelector('main');
-  const screen = document.getElementById('catch-registration');
+  const registration = document.getElementById('catch-registration');
+  const history = document.getElementById('catch-history');
   const nav = document.querySelectorAll('.nav-item');
   const form = document.getElementById('catch-form');
   const date = document.getElementById('catch-date');
   const feedback = document.getElementById('entry-feedback');
+  const submit = form.querySelector('.entry-submit');
   const minus = document.getElementById('count-minus');
+  const nextEntry = document.getElementById('entry-next');
+  const list = document.getElementById('history-list');
+  const status = document.getElementById('history-status');
   let count = 1;
   let homeScroll = 0;
+  let current = 0;
+  let submitted = false;
   const today = new Date();
   date.value = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
-  nav[0].setAttribute('aria-current','page');
-  function showRegistration(open) {
-    if (open && screen.hidden) homeScroll = window.scrollY;
-    homeHeader.hidden = open;
-    homeMain.hidden = open;
-    screen.hidden = !open;
-    nav[0].classList.toggle('active', !open);
-    nav[1].classList.toggle('active', open);
-    nav[open ? 0 : 1].removeAttribute('aria-current');
-    nav[open ? 1 : 0].setAttribute('aria-current','page');
-    feedback.textContent = '';
-    window.scrollTo(0,open ? 0 : homeScroll);
-    if (open) document.getElementById('entry-title').focus({preventScroll:true});
+  function validRecord(record) {
+    return record && typeof record.id === 'string' &&
+      typeof record.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(record.date) &&
+      Number.isFinite(Date.parse(record.date)) &&
+      new Date(record.date).toISOString().slice(0,10) === record.date &&
+      ['ひろき','ゆうま','まさき'].includes(record.angler) &&
+      ['アオリイカ','コウイカ','タコ'].includes(record.species) &&
+      Number.isSafeInteger(record.count) && record.count >= 1;
   }
-  document.querySelector('.register-button').addEventListener('click',()=>showRegistration(true));
-  nav[1].addEventListener('click',()=>showRegistration(true));
-  nav[0].addEventListener('click',()=>showRegistration(false));
+  function readRecords() {
+    const raw = localStorage.getItem(key);
+    const records = raw === null ? [] : JSON.parse(raw);
+    if (!Array.isArray(records) || !records.every(validRecord)) throw new Error('Invalid records');
+    return records;
+  }
+  function renderHistory() {
+    list.replaceChildren();
+    try {
+      const records = readRecords().slice().reverse().sort((a,b)=>b.date.localeCompare(a.date));
+      status.textContent = records.length ? records.length + '件の記録 · 新しい日付順' : 'まだ釣果の記録がありません。釣果登録から最初の1件を登録しましょう。';
+      for (const record of records) {
+        const item = document.createElement('li');
+        item.className = 'history-record';
+        const details = document.createElement('div');
+        const day = document.createElement('time');
+        day.dateTime = record.date;
+        day.textContent = record.date.replaceAll('-','/');
+        const name = document.createElement('p');
+        name.className = 'history-person';
+        name.textContent = record.angler;
+        const species = document.createElement('p');
+        species.className = 'history-species';
+        species.textContent = record.species;
+        details.append(day,name,species);
+        const amount = document.createElement('p');
+        amount.className = 'history-amount';
+        amount.textContent = record.count + (record.species === 'タコ' ? '匹' : '杯');
+        item.append(details,amount);
+        list.append(item);
+      }
+    } catch {
+      status.textContent = '記録を読み込めませんでした。ブラウザの保存設定を確認してください。保存済みの内容は変更していません。';
+    }
+  }
+  nav[0].setAttribute('aria-current','page');
+  function showPage(next) {
+    if (current === 0 && next !== 0) homeScroll = window.scrollY;
+    homeHeader.hidden = next !== 0;
+    homeMain.hidden = next !== 0;
+    registration.hidden = next !== 1;
+    history.hidden = next !== 2;
+    nav.forEach((button,index)=>{
+      button.classList.toggle('active',index === next);
+      if (index === next) button.setAttribute('aria-current','page');
+      else button.removeAttribute('aria-current');
+    });
+    current = next;
+    if (next === 2) renderHistory();
+    window.scrollTo(0,next === 0 ? homeScroll : 0);
+    if (next !== 0) document.getElementById(next === 1 ? 'entry-title' : 'history-title').focus({preventScroll:true});
+  }
+  document.querySelector('.register-button').addEventListener('click',()=>showPage(1));
+  document.querySelector('.view-all').addEventListener('click',()=>showPage(2));
+  nav[0].addEventListener('click',()=>showPage(0));
+  nav[1].addEventListener('click',()=>showPage(1));
+  nav[2].addEventListener('click',()=>showPage(2));
   document.getElementById('entry-back').addEventListener('click',()=>{
-    showRegistration(false);
+    showPage(0);
     document.querySelector('.register-button').focus({preventScroll:true});
   });
-  function updateCount(delta) {
-    count = Math.max(1,count + delta);
-    document.getElementById('catch-count').textContent = count;
-    minus.disabled = count === 1;
+  document.getElementById('history-back').addEventListener('click',()=>{
+    showPage(0);
+    nav[0].focus({preventScroll:true});
+  });
+  document.getElementById('history-register').addEventListener('click',()=>showPage(1));
+  function clearFeedback() {
+    nextEntry.hidden = true;
+    submitted = false;
+    submit.disabled = false;
     feedback.textContent = '';
   }
+  function updateCount(delta) {
+    count = Math.min(Number.MAX_SAFE_INTEGER,Math.max(1,count + delta));
+    document.getElementById('catch-count').textContent = count;
+    minus.disabled = count === 1;
+    clearFeedback();
+  }
   minus.addEventListener('click',()=>updateCount(-1));
+  nextEntry.addEventListener('click',()=>{
+    count = 1;
+    updateCount(0);
+    date.focus();
+  });
   document.getElementById('count-plus').addEventListener('click',()=>updateCount(1));
-  form.addEventListener('input',()=>{feedback.textContent = '';});
+  form.addEventListener('input',clearFeedback);
   form.addEventListener('change',()=>{
+    clearFeedback();
     document.getElementById('catch-unit').textContent = form.elements.species.value === 'タコ' ? '匹' : '杯';
   });
-  form.addEventListener('submit',(event)=>{
+  form.addEventListener('submit',event=>{
     event.preventDefault();
-    feedback.textContent = '登録しました！';
+    if (submitted || !form.reportValidity()) return;
+    const record = {
+      id: typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2),
+      date:date.value, angler:form.elements.angler.value,
+      species:form.elements.species.value, count
+    };
+    if (!validRecord(record)) {
+      feedback.textContent = '日付と入力内容を確認してください。';
+      return;
+    }
+    try {
+      const records = readRecords();
+      records.push(record);
+      localStorage.setItem(key,JSON.stringify(records));
+      submitted = true;
+      submit.disabled = true;
+      feedback.textContent = '登録しました！';
+      nextEntry.hidden = false;
+    } catch {
+      feedback.textContent = '保存できませんでした。ブラウザの保存設定や空き容量を確認して、もう一度お試しください。';
+    }
+  });
+  window.addEventListener('storage',event=>{
+    if ((event.key === key || event.key === null) && current === 2) renderHistory();
   });
 })();
+
 
 </script>
 
